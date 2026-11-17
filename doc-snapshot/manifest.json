@@ -1,0 +1,385 @@
+{
+  "schema": 1,
+  "docsRoot": "https://docs.copilotkit.ai/vue/ms-agent-harness-dotnet",
+  "syncedAt": "2026-11-16T13:31:14.178Z",
+  "pages": {
+    "/ms-agent-harness-dotnet/generative-ui/components": {
+      "file": "ms-agent-harness-dotnet__generative-ui__components.md",
+      "sha256": "189098e3af2128d051e934827b95f67d4131c9ac72b16fc7e922063a08e1052a",
+      "bytes": 33741,
+      "lines": 795,
+      "routes": [
+        "/generative-ui/components"
+      ],
+      "status": "ok",
+      "age": 0,
+      "date": "Mon, 16 Nov 2026 13:31:15 GMT"
+    },
+    "/ms-agent-harness-dotnet/generative-ui/components/catalogs": {
+      "file": "ms-agent-harness-dotnet__generative-ui__components__catalogs.md",
+      "sha256": "85c702e6c0e95598f7c1368ff5e1c4241ce2f54d6df174ca40a7ff59b41068cc",
+      "bytes": 23851,
+      "lines": 520,
+      "routes": [
+        "/generative-ui/components/catalogs"
+      ],
+      "status": "ok",
+      "age": 0,
+      "date": "Mon, 16 Nov 2026 13:31:15 GMT"
+    },
+    "/ms-agent-harness-dotnet/generative-ui/components/from-a2ui": {
+      "file": "ms-agent-harness-dotnet__generative-ui__components__from-a2ui.md",
+      "sha256": "203ed0a14d80b979a89bb86d1d0b6145493aba3dd6614859d70944ed8a581b41",
+      "bytes": 16768,
+      "lines": 279,
+      "routes": [
+        "/generative-ui/components/from-a2ui"
+      ],
+      "status": "ok",
+      "age": 0,
+      "date": "Mon, 16 Nov 2026 13:31:15 GMT"
+    },
+    "/ms-agent-harness-dotnet/generative-ui/components/markdown-mode": {
+      "file": "ms-agent-harness-dotnet__generative-ui__components__markdown-mode.md",
+      "sha256": "fd3260c175808cf729ab0a00002d2d0a55e81736e1902e4b355e5841c3f71ac4",
+      "bytes": 8774,
+      "lines": 188,
+      "routes": [
+        "/generative-ui/components/markdown-mode"
+      ],
+      "status": "ok",
+      "age": 0,
+      "date": "Mon, 16 Nov 2026 13:31:15 GMT"
+    },
+    "/ms-agent-harness-dotnet/generative-ui/components/standard-catalog": {
+      "file": "ms-agent-harness-dotnet__generative-ui__components__standard-catalog.md",
+      "sha256": "81c73b0ee01441ac8e929b0f351c84e6b48cecf84e68d6394d744c2d57ff7731",
+      "bytes": 16223,
+      "lines": 238,
+      "routes": [
+        "/generative-ui/components/standard-catalog"
+      ],
+      "status": "ok",
+      "age": 0,
+      "date": "Mon, 16 Nov 2026 13:31:15 GMT"
+    },
+    "/ms-agent-harness-dotnet/generative-ui/components/state-and-actions": {
+      "file": "ms-agent-harness-dotnet__generative-ui__components__state-and-actions.md",
+      "sha256": "0082c6bd72d420d029760a62c77e70b0c3f7c3d09862a2f0bca0053fd016d694",
+      "bytes": 23532,
+      "lines": 556,
+      "routes": [
+        "/generative-ui/components/state-and-actions"
+      ],
+      "status": "ok",
+      "age": 0,
+      "date": "Mon, 16 Nov 2026 13:31:15 GMT"
+    },
+    "/ms-agent-harness-dotnet/generative-ui/components/surfaces": {
+      "file": "ms-agent-harness-dotnet__generative-ui__components__surfaces.md",
+      "sha256": "8a884b20530c84c29a98f85947a5e81e26b57a675af4356a4b2d69d641581b41",
+      "bytes": 21308,
+      "lines": 427,
+      "routes": [
+        "/generative-ui/components/surfaces"
+      ],
+      "status": "ok",
+      "age": 0,
+      "date": "Mon, 16 Nov 2026 13:31:16 GMT"
+    },
+    "/ms-agent-harness-dotnet/generative-ui/components/theming": {
+      "file": "ms-agent-harness-dotnet__generative-ui__components__theming.md",
+      "sha256": "b1ee300fc29a543ff3a6a7adf16ba887f7271b9a2729e890b79454b8ed0b3993",
+      "bytes": 6815,
+      "lines": 203,
+      "routes": [
+        "/generative-ui/components/theming"
+      ],
+      "status": "ok",
+      "age": 0,
+      "date": "Mon, 16 Nov 2026 13:31:15 GMT"
+    },
+    "/ms-agent-harness-dotnet/generative-ui/components/transports": {
+      "file": "ms-agent-harness-dotnet__generative-ui__components__transports.md",
+      "sha256": "8573ef14118d5bdb4c9f791a20f5aa3d8fa9c8e4839e356615f15043f0d64c2b",
+      "bytes": 5171,
+      "lines": 139,
+      "routes": [
+        "/generative-ui/components/transports"
+      ],
+      "status": "ok",
+      "age": 0,
+      "date": "Mon, 16 Nov 2026 13:31:15 GMT"
+    },
+    "/vue/ms-agent-harness-dotnet": {
+      "file": "vue__ms-agent-harness-dotnet.md",
+      "sha256": "5c6d6354f16b0edcb97d0be831edde10cc9bbb85ef6a7444d3eb8feb6bf1e773",
+      "bytes": 8322,
+      "lines": 201,
+      "routes": [
+        "/",
+        "/quickstart"
+      ],
+      "status": "ok",
+      "age": 0,
+      "date": "Mon, 16 Nov 2026 13:31:15 GMT"
+    },
+    "/vue/ms-agent-harness-dotnet/custom-look-and-feel/headless-ui": {
+      "file": "vue__ms-agent-harness-dotnet__custom-look-and-feel__headless-ui.md",
+      "sha256": "22c536eb48e778e5523cfc38629b3375bbfcac0a516899ab2a80232c12dbda0d",
+      "bytes": 7245,
+      "lines": 195,
+      "routes": [
+        "/custom-look-and-feel/headless-ui"
+      ],
+      "status": "ok",
+      "age": 0,
+      "date": "Mon, 16 Nov 2026 13:31:15 GMT"
+    },
+    "/vue/ms-agent-harness-dotnet/custom-look-and-feel/slots": {
+      "file": "vue__ms-agent-harness-dotnet__custom-look-and-feel__slots.md",
+      "sha256": "992430bb56a5ab1d285cfae290b94341e89d1e3a910166d582a705103c1db89e",
+      "bytes": 8806,
+      "lines": 270,
+      "routes": [
+        "/custom-look-and-feel/slots"
+      ],
+      "status": "ok",
+      "age": 0,
+      "date": "Mon, 16 Nov 2026 13:31:15 GMT"
+    },
+    "/vue/ms-agent-harness-dotnet/frontend-tools": {
+      "file": "vue__ms-agent-harness-dotnet__frontend-tools.md",
+      "sha256": "c039a209fbfeae2f5121070e825d0a25f39f21b5466a89185fd69365b47a903d",
+      "bytes": 3136,
+      "lines": 76,
+      "routes": [
+        "/frontend-tools"
+      ],
+      "status": "ok",
+      "age": 0,
+      "date": "Mon, 16 Nov 2026 13:31:15 GMT"
+    },
+    "/vue/ms-agent-harness-dotnet/generative-ui/mcp-apps": {
+      "file": "vue__ms-agent-harness-dotnet__generative-ui__mcp-apps.md",
+      "sha256": "a56ae2f57bffbfdd5959094850de7ba2284895815ad13cd3fe7df5c3d2ff6ee6",
+      "bytes": 5472,
+      "lines": 155,
+      "routes": [
+        "/generative-ui/mcp-apps"
+      ],
+      "status": "ok",
+      "age": 0,
+      "date": "Mon, 16 Nov 2026 13:31:15 GMT"
+    },
+    "/vue/ms-agent-harness-dotnet/generative-ui/state-rendering": {
+      "file": "vue__ms-agent-harness-dotnet__generative-ui__state-rendering.md",
+      "sha256": "d5dc0a65d932014a5f90dff967f186675585a4fe43b2c2a561b93cd4336092a9",
+      "bytes": 3258,
+      "lines": 76,
+      "routes": [
+        "/generative-ui/state-rendering"
+      ],
+      "status": "ok",
+      "age": 0,
+      "date": "Mon, 16 Nov 2026 13:31:16 GMT"
+    },
+    "/vue/ms-agent-harness-dotnet/generative-ui/tool-based": {
+      "file": "vue__ms-agent-harness-dotnet__generative-ui__tool-based.md",
+      "sha256": "5e4b80bb52284751f8ec84b52ec10191998c52fea7207c6f5137632e79dd2e13",
+      "bytes": 3516,
+      "lines": 84,
+      "routes": [
+        "/generative-ui/tool-based"
+      ],
+      "status": "ok",
+      "age": 0,
+      "date": "Mon, 16 Nov 2026 13:31:16 GMT"
+    },
+    "/vue/ms-agent-harness-dotnet/generative-ui/tool-rendering": {
+      "file": "vue__ms-agent-harness-dotnet__generative-ui__tool-rendering.md",
+      "sha256": "896e4a12ff1c6c536236a92e2b4e905b47f66322a77385734127a5e6b6e319b6",
+      "bytes": 5081,
+      "lines": 122,
+      "routes": [
+        "/generative-ui/tool-rendering"
+      ],
+      "status": "ok",
+      "age": 0,
+      "date": "Mon, 16 Nov 2026 13:31:16 GMT"
+    },
+    "/vue/ms-agent-harness-dotnet/headless-threads": {
+      "file": "vue__ms-agent-harness-dotnet__headless-threads.md",
+      "sha256": "a1fd5cad9cd1f85f10abd0ae200690ca41ec18e74aa48e4d3b040c55659d0ec3",
+      "bytes": 7658,
+      "lines": 182,
+      "routes": [
+        "/headless-threads"
+      ],
+      "status": "ok",
+      "age": 0,
+      "date": "Mon, 16 Nov 2026 13:31:16 GMT"
+    },
+    "/vue/ms-agent-harness-dotnet/human-in-the-loop": {
+      "file": "vue__ms-agent-harness-dotnet__human-in-the-loop.md",
+      "sha256": "6e4c40537abf769d82227055c43cc0645661409d694e47b514d22467e6953c2a",
+      "bytes": 4109,
+      "lines": 80,
+      "routes": [
+        "/human-in-the-loop"
+      ],
+      "status": "ok",
+      "age": 0,
+      "date": "Mon, 16 Nov 2026 13:31:16 GMT"
+    },
+    "/vue/ms-agent-harness-dotnet/human-in-the-loop/governed-actions": {
+      "file": "vue__ms-agent-harness-dotnet__human-in-the-loop__governed-actions.md",
+      "sha256": "6108b33ad1000801d9062b0cd869240c294ad278ee202eaae810db0217a636ac",
+      "bytes": 8125,
+      "lines": 247,
+      "routes": [
+        "/human-in-the-loop/governed-actions"
+      ],
+      "status": "ok",
+      "age": 0,
+      "date": "Mon, 16 Nov 2026 13:31:16 GMT"
+    },
+    "/vue/ms-agent-harness-dotnet/human-in-the-loop/headless": {
+      "file": "vue__ms-agent-harness-dotnet__human-in-the-loop__headless.md",
+      "sha256": "9e936c3780ca0efa29d07139d38ac612c0d6835949ff708cd3b259b676db6734",
+      "bytes": 2628,
+      "lines": 63,
+      "routes": [
+        "/human-in-the-loop/headless"
+      ],
+      "status": "ok",
+      "age": 0,
+      "date": "Mon, 16 Nov 2026 13:31:16 GMT"
+    },
+    "/vue/ms-agent-harness-dotnet/human-in-the-loop/useInterrupt": {
+      "file": "vue__ms-agent-harness-dotnet__human-in-the-loop__useInterrupt.md",
+      "sha256": "ffb2e84cb3b2733306d60a889be041203d99c6b6997c22d6eabbb9504b81ab97",
+      "bytes": 5765,
+      "lines": 137,
+      "routes": [
+        "/human-in-the-loop/useInterrupt"
+      ],
+      "status": "ok",
+      "age": 0,
+      "date": "Mon, 16 Nov 2026 13:31:16 GMT"
+    },
+    "/vue/ms-agent-harness-dotnet/multi-agent/subagents": {
+      "file": "vue__ms-agent-harness-dotnet__multi-agent__subagents.md",
+      "sha256": "bdc1b6eeef3b154e96a3baed6abdd51e04ecb1e583dbc2fe9c54ac77ebe88d03",
+      "bytes": 32706,
+      "lines": 815,
+      "routes": [
+        "/multi-agent/subagents"
+      ],
+      "status": "ok",
+      "age": 0,
+      "date": "Mon, 16 Nov 2026 13:31:16 GMT"
+    },
+    "/vue/ms-agent-harness-dotnet/prebuilt-components": {
+      "file": "vue__ms-agent-harness-dotnet__prebuilt-components.md",
+      "sha256": "79edfb28e1caa9cd8b37681b457c857750dae5733ee3bd6f5d524b44db70390a",
+      "bytes": 2848,
+      "lines": 70,
+      "routes": [
+        "/prebuilt-components"
+      ],
+      "status": "ok",
+      "age": 0,
+      "date": "Mon, 16 Nov 2026 13:31:16 GMT"
+    },
+    "/vue/ms-agent-harness-dotnet/prebuilt-components/copilot-threads-drawer": {
+      "file": "vue__ms-agent-harness-dotnet__prebuilt-components__copilot-threads-drawer.md",
+      "sha256": "580690e52c565ffa84667de4ab8c838608cba6e15e5490708131d27890e3eaa3",
+      "bytes": 10519,
+      "lines": 243,
+      "routes": [
+        "/prebuilt-components/copilot-threads-drawer"
+      ],
+      "status": "ok",
+      "age": 0,
+      "date": "Mon, 16 Nov 2026 13:31:16 GMT"
+    },
+    "/vue/ms-agent-harness-dotnet/programmatic-control": {
+      "file": "vue__ms-agent-harness-dotnet__programmatic-control.md",
+      "sha256": "f92ef455f2f138084590b68719098f24da2bbe1093ce7c6bafbc15befd2eb56c",
+      "bytes": 4944,
+      "lines": 129,
+      "routes": [
+        "/programmatic-control"
+      ],
+      "status": "ok",
+      "age": 0,
+      "date": "Mon, 16 Nov 2026 13:31:16 GMT"
+    },
+    "/vue/ms-agent-harness-dotnet/shared-state": {
+      "file": "vue__ms-agent-harness-dotnet__shared-state.md",
+      "sha256": "dd821107b2cb715189e37e41b5bc1e6e17eb403f2a6875251ff39fa47ea3b1d8",
+      "bytes": 5306,
+      "lines": 128,
+      "routes": [
+        "/shared-state"
+      ],
+      "status": "ok",
+      "age": 0,
+      "date": "Mon, 16 Nov 2026 13:31:16 GMT"
+    },
+    "/vue/ms-agent-harness-dotnet/shared-state/agent-readonly": {
+      "file": "vue__ms-agent-harness-dotnet__shared-state__agent-readonly.md",
+      "sha256": "9a93802267daedb1a9d499681c8a71daac75d7b7203b71be20c1888fc0dbd6d2",
+      "bytes": 3504,
+      "lines": 77,
+      "routes": [
+        "/shared-state/agent-readonly"
+      ],
+      "status": "ok",
+      "age": 0,
+      "date": "Mon, 16 Nov 2026 13:31:16 GMT"
+    },
+    "/vue/ms-agent-harness-dotnet/shared-state/rendering-in-app": {
+      "file": "vue__ms-agent-harness-dotnet__shared-state__rendering-in-app.md",
+      "sha256": "e84ee4c67aa1f0b778b33c8a034400c954f3dbb9f67d815093fc7e92d393dab8",
+      "bytes": 5267,
+      "lines": 128,
+      "routes": [
+        "/shared-state/rendering-in-app"
+      ],
+      "status": "ok",
+      "age": 0,
+      "date": "Mon, 16 Nov 2026 13:31:16 GMT"
+    },
+    "/vue/ms-agent-harness-dotnet/shared-state/streaming": {
+      "file": "vue__ms-agent-harness-dotnet__shared-state__streaming.md",
+      "sha256": "f0501c1397d04cf5e22ed473515488d0db023ce2638b4261c6b3f03c80608a7a",
+      "bytes": 4085,
+      "lines": 90,
+      "routes": [
+        "/shared-state/streaming"
+      ],
+      "status": "ok",
+      "age": 0,
+      "date": "Mon, 16 Nov 2026 13:31:17 GMT"
+    },
+    "/vue/ms-agent-harness-dotnet/webmcp": {
+      "file": "vue__ms-agent-harness-dotnet__webmcp.md",
+      "sha256": "c2dfd1ccacabc8864a5032de2546c4e84675ea71020ba6579aaca551f171e805",
+      "bytes": 7264,
+      "lines": 161,
+      "routes": [
+        "/webmcp"
+      ],
+      "status": "ok",
+      "age": 0,
+      "date": "Mon, 16 Nov 2026 13:31:16 GMT"
+    }
+  },
+  "sitemap": {
+    "fetchedAt": "2026-11-16T13:31:14.178Z",
+    "urlsUnderRoot": 0,
+    "knownUnmapped": []
+  }
+}

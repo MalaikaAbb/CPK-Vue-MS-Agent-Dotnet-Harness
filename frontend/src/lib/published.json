@@ -1,0 +1,1740 @@
+{
+ "ms-agent-harness-dotnet__generative-ui__components": [
+  {
+   "lang": "bash",
+   "title": null,
+   "code": "npm install @copilotkit/react-core @copilotkit/runtime @tanstack/ai @tanstack/ai-openai",
+   "rendered": true
+  },
+  {
+   "lang": "bash",
+   "title": ".env.local",
+   "code": "OPENAI_API_KEY=sk-...",
+   "rendered": true
+  },
+  {
+   "lang": "bash",
+   "title": null,
+   "code": "npm install @copilotkit/angular @angular/cdk @copilotkit/runtime @tanstack/ai @tanstack/ai-openai\nnpm install -D tsx",
+   "rendered": true
+  },
+  {
+   "lang": "bash",
+   "title": null,
+   "code": "export OPENAI_API_KEY=sk-...",
+   "rendered": true
+  },
+  {
+   "lang": "bash",
+   "title": null,
+   "code": "npm install @copilotkit/react-native @copilotkit/runtime @tanstack/ai @tanstack/ai-openai \"zod@^3.25\"\nnpm install -D tsx",
+   "rendered": true
+  },
+  {
+   "lang": "bash",
+   "title": null,
+   "code": "export OPENAI_API_KEY=sk-...",
+   "rendered": true
+  },
+  {
+   "lang": "bash",
+   "title": null,
+   "code": "npm install @copilotkit/vue @copilotkit/runtime @tanstack/ai @tanstack/ai-openai\nnpm install -D tsx",
+   "rendered": true
+  },
+  {
+   "lang": "bash",
+   "title": null,
+   "code": "export OPENAI_API_KEY=sk-...",
+   "rendered": true
+  },
+  {
+   "lang": "ts",
+   "title": "app/api/copilotkit/[[...slug]]/route.ts",
+   "code": "import { chat } from \"@tanstack/ai\";\nimport { openaiText } from \"@tanstack/ai-openai\";\nimport {\n  BuiltInAgent,\n  convertInputToTanStackAI,\n  CopilotRuntime,\n  createCopilotRuntimeHandler,\n  InMemoryAgentRunner,\n} from \"@copilotkit/runtime/v2\";\n\nconst agent = new BuiltInAgent({\n  type: \"tanstack\",\n  factory: ({ input, abortController }) => {\n    const { messages, systemPrompts, tools } = convertInputToTanStackAI(input);\n    return chat({\n      adapter: openaiText(\"gpt-6-luna\"),\n      messages,\n      systemPrompts: [\n        \"You are a helpful assistant. When a visual answer helps, render it with generative UI.\",\n        ...systemPrompts,\n      ],\n      tools,\n      abortController,\n    });\n  },\n});\n\nconst runtime = new CopilotRuntime({\n  agents: { default: agent },\n  runner: new InMemoryAgentRunner(),\n});\n\nconst handler = createCopilotRuntimeHandler({ runtime, basePath: \"/api/copilotkit\" });\n\nexport const GET = handler;\nexport const POST = handler;",
+   "rendered": true
+  },
+  {
+   "lang": "ts",
+   "title": "server.ts",
+   "code": "import { createServer } from \"node:http\";\nimport { chat } from \"@tanstack/ai\";\nimport { openaiText } from \"@tanstack/ai-openai\";\nimport {\n  BuiltInAgent,\n  convertInputToTanStackAI,\n  CopilotRuntime,\n  InMemoryAgentRunner,\n} from \"@copilotkit/runtime/v2\";\nimport { createCopilotNodeListener } from \"@copilotkit/runtime/v2/node\";\n\nconst agent = new BuiltInAgent({\n  type: \"tanstack\",\n  factory: ({ input, abortController }) => {\n    const { messages, systemPrompts, tools } = convertInputToTanStackAI(input);\n    return chat({\n      adapter: openaiText(\"gpt-6-luna\"),\n      messages,\n      systemPrompts: [\n        \"You are a helpful assistant. When a visual answer helps, render it with generative UI.\",\n        ...systemPrompts,\n      ],\n      tools,\n      abortController,\n    });\n  },\n});\n\nconst runtime = new CopilotRuntime({\n  agents: { default: agent },\n  runner: new InMemoryAgentRunner(),\n});\n\ncreateServer(\n  createCopilotNodeListener({ runtime, basePath: \"/api/copilotkit\", cors: true }),\n).listen(8200, () => {\n  console.log(\"Copilot Runtime listening at http://localhost:8200/api/copilotkit\");\n});",
+   "rendered": true
+  },
+  {
+   "lang": "ts",
+   "title": "server.ts",
+   "code": "import { createServer } from \"node:http\";\nimport { chat } from \"@tanstack/ai\";\nimport { openaiText } from \"@tanstack/ai-openai\";\nimport {\n  BuiltInAgent,\n  convertInputToTanStackAI,\n  CopilotRuntime,\n  InMemoryAgentRunner,\n} from \"@copilotkit/runtime/v2\";\nimport { createCopilotNodeListener } from \"@copilotkit/runtime/v2/node\";\n\nconst agent = new BuiltInAgent({\n  type: \"tanstack\",\n  factory: ({ input, abortController }) => {\n    const { messages, systemPrompts, tools } = convertInputToTanStackAI(input);\n    return chat({\n      adapter: openaiText(\"gpt-6-luna\"),\n      messages,\n      systemPrompts: [\n        \"You are a helpful assistant. When a visual answer helps, render it with generative UI.\",\n        ...systemPrompts,\n      ],\n      tools,\n      abortController,\n    });\n  },\n});\n\nconst runtime = new CopilotRuntime({\n  agents: { default: agent },\n  runner: new InMemoryAgentRunner(),\n});\n\ncreateServer(\n  createCopilotNodeListener({ runtime, basePath: \"/api/copilotkit\", cors: true }),\n).listen(8200, () => {\n  console.log(\"Copilot Runtime listening at http://localhost:8200/api/copilotkit\");\n});",
+   "rendered": true
+  },
+  {
+   "lang": "ts",
+   "title": "server.ts",
+   "code": "import { createServer } from \"node:http\";\nimport { chat } from \"@tanstack/ai\";\nimport { openaiText } from \"@tanstack/ai-openai\";\nimport {\n  BuiltInAgent,\n  convertInputToTanStackAI,\n  CopilotRuntime,\n  InMemoryAgentRunner,\n} from \"@copilotkit/runtime/v2\";\nimport { createCopilotNodeListener } from \"@copilotkit/runtime/v2/node\";\n\nconst agent = new BuiltInAgent({\n  type: \"tanstack\",\n  factory: ({ input, abortController }) => {\n    const { messages, systemPrompts, tools } = convertInputToTanStackAI(input);\n    return chat({\n      adapter: openaiText(\"gpt-6-luna\"),\n      messages,\n      systemPrompts: [\n        \"You are a helpful assistant. When a visual answer helps, render it with generative UI.\",\n        ...systemPrompts,\n      ],\n      tools,\n      abortController,\n    });\n  },\n});\n\nconst runtime = new CopilotRuntime({\n  agents: { default: agent },\n  runner: new InMemoryAgentRunner(),\n});\n\ncreateServer(\n  createCopilotNodeListener({ runtime, basePath: \"/api/copilotkit\", cors: true }),\n).listen(8200, () => {\n  console.log(\"Copilot Runtime listening at http://localhost:8200/api/copilotkit\");\n});",
+   "rendered": true
+  },
+  {
+   "lang": "tsx",
+   "title": "app/providers.tsx",
+   "code": "\"use client\";\nimport { CopilotKitProvider } from \"@copilotkit/react-core/v2\";\nimport { standardUI } from \"@copilotkit/react-core/v2/generative-ui\";\nimport \"@copilotkit/react-core/v2/styles.css\";\n\nexport function Providers({ children }: { children: React.ReactNode }) {\n  return (\n    <CopilotKitProvider runtimeUrl=\"/api/copilotkit\" generativeUI={{ ui: standardUI }}>\n      {children}\n    </CopilotKitProvider>\n  );\n}",
+   "rendered": true
+  },
+  {
+   "lang": "tsx",
+   "title": "app/layout.tsx",
+   "code": "import { Providers } from \"./providers\";\n\nexport default function RootLayout({ children }: { children: React.ReactNode }) {\n  return (\n    <html lang=\"en\">\n      <body>\n        <Providers>{children}</Providers>\n      </body>\n    </html>\n  );\n}",
+   "rendered": true
+  },
+  {
+   "lang": "tsx",
+   "title": "app/page.tsx",
+   "code": "\"use client\";\nimport { CopilotChat } from \"@copilotkit/react-core/v2\";\n\nexport default function Page() {\n  return <CopilotChat />;\n}",
+   "rendered": true
+  },
+  {
+   "lang": "ts",
+   "title": "src/app/app.config.ts",
+   "code": "import { ApplicationConfig } from \"@angular/core\";\nimport { provideCopilotKit } from \"@copilotkit/angular\";\nimport { provideGenerativeUI, standardUI } from \"@copilotkit/angular/generative-ui\";\n\nexport const appConfig: ApplicationConfig = {\n  providers: [\n    provideCopilotKit({ runtimeUrl: \"http://localhost:8200/api/copilotkit\" }),\n    provideGenerativeUI({ ui: standardUI }),\n  ],\n};",
+   "rendered": true
+  },
+  {
+   "lang": "css",
+   "title": "src/styles.css",
+   "code": "@import \"@copilotkit/angular/styles.css\";",
+   "rendered": true
+  },
+  {
+   "lang": "ts",
+   "title": "src/app/app.ts",
+   "code": "import { Component } from \"@angular/core\";\nimport { CopilotChat } from \"@copilotkit/angular\";\n\n@Component({\n  selector: \"app-root\",\n  imports: [CopilotChat],\n  template: `<copilot-chat />`,\n})\nexport class App {}",
+   "rendered": true
+  },
+  {
+   "lang": "bash",
+   "title": null,
+   "code": "npm install chart.js maplibre-gl lucide",
+   "rendered": true
+  },
+  {
+   "lang": "tsx",
+   "title": "src/plansUI.tsx",
+   "code": "import { StyleSheet, Text, View } from \"react-native\";\nimport { z } from \"zod\";\nimport {\n  createGenerativeUI,\n  type GenerativeUIComponentProps,\n} from \"@copilotkit/react-native/generative-ui\";\n\nfunction PlanList({ title, children }: GenerativeUIComponentProps<typeof plansUI, \"PlanList\">) {\n  return (\n    <View style={styles.list}>\n      {title ? <Text style={styles.title}>{title}</Text> : null}\n      {children}\n    </View>\n  );\n}\n\nfunction PlanCard({ name, price, features }: GenerativeUIComponentProps<typeof plansUI, \"PlanCard\">) {\n  return (\n    <View style={styles.card}>\n      <Text style={styles.name}>{name}</Text>\n      <Text>${price} / month</Text>\n      {features.map((feature, index) => (\n        <Text key={`${index}-${feature}`} style={styles.feature}>\n          \u2022 {feature}\n        </Text>\n      ))}\n    </View>\n  );\n}\n\nexport const plansUI = createGenerativeUI({\n  id: \"acme/plans@1\",\n  components: {\n    PlanList: {\n      component: PlanList,\n      description: \"A vertical list of plans. Put the ids of PlanCard components in children.\",\n      props: z.object({ title: z.string().optional() }),\n      slots: { children: \"multiple\" },\n    },\n    PlanCard: {\n      component: PlanCard,\n      description: \"One pricing plan: its name, its monthly price in dollars, and its main features.\",\n      props: z.object({ name: z.string(), price: z.number(), features: z.array(z.string()) }),\n    },\n  },\n});\n\nconst styles = StyleSheet.create({\n  // Margins rather than `gap`, which needs React Native 0.71.\n  list: { marginVertical: 8 },\n  title: { fontSize: 17, fontWeight: \"600\" },\n  card: { marginTop: 8, padding: 12, borderRadius: 12, backgroundColor: \"#f4f4f5\" },\n  name: { fontWeight: \"700\" },\n  feature: { color: \"#52525b\" },\n});",
+   "rendered": true
+  },
+  {
+   "lang": "tsx",
+   "title": "App.tsx",
+   "code": "import { Platform } from \"react-native\";\nimport { CopilotKitProvider } from \"@copilotkit/react-native/headless\";\nimport { GenerativeUIProvider } from \"@copilotkit/react-native/generative-ui\";\nimport { plansUI } from \"./src/plansUI\";\nimport { ChatScreen } from \"./src/ChatScreen\";\n\nconst runtimeUrl =\n  Platform.OS === \"android\"\n    ? \"http://10.0.2.2:8200/api/copilotkit\"\n    : \"http://localhost:8200/api/copilotkit\";\n\nexport default function App() {\n  return (\n    <CopilotKitProvider runtimeUrl={runtimeUrl}>\n      <GenerativeUIProvider ui={plansUI}>\n        <ChatScreen />\n      </GenerativeUIProvider>\n    </CopilotKitProvider>\n  );\n}",
+   "rendered": true
+  },
+  {
+   "lang": "tsx",
+   "title": "src/agentTurns.ts",
+   "code": "import {\n  CopilotKitCoreErrorCode,\n  type useAgent,\n  type useCopilotKit,\n} from \"@copilotkit/react-native/headless\";\nimport {\n  isGenerativeUIActivity,\n  type GenerativeUIActivityMessage,\n} from \"@copilotkit/react-native/generative-ui\";\n\ntype CopilotKit = ReturnType<typeof useCopilotKit>[\"copilotkit\"];\ntype Agent = ReturnType<typeof useAgent>[\"agent\"];\n\n/**\n * The errors that end a run. A failed tool call is not one of them\n * (TOOL_HANDLER_FAILED, TOOL_ARGUMENT_PARSE_FAILED): its error goes back to\n * the model as the result of the call, and the run goes on.\n */\nconst RUN_FAILURES: ReadonlySet<CopilotKitCoreErrorCode> = new Set([\n  CopilotKitCoreErrorCode.AGENT_RUN_FAILED,\n  CopilotKitCoreErrorCode.AGENT_RUN_FAILED_EVENT,\n  CopilotKitCoreErrorCode.AGENT_RUN_ERROR_EVENT,\n  CopilotKitCoreErrorCode.AGENT_THREAD_LOCKED,\n]);\n\n// Date.now() alone repeats within a millisecond; with a counter, ids do not.\nlet sent = 0;\n\n/**\n * Sends one user message and runs the agent. Resolves with the run's error,\n * or undefined; it never rejects. It counts every run failure of this agent\n * while it waits, so start one run of an agent at a time.\n */\nexport async function runTurn(\n  copilotkit: CopilotKit,\n  agent: Agent,\n  content: string,\n) {\n  const before = agent.messages.map((message) => message.id);\n  const { threadId } = agent;\n  let failure: Error | undefined;\n  const subscription = copilotkit.subscribe({\n    onError: ({ error, code, context }) => {\n      if (context.agentId === agent.agentId && RUN_FAILURES.has(code)) {\n        failure ??= error;\n      }\n    },\n  });\n  try {\n    sent += 1;\n    agent.addMessage({\n      id: `user-${Date.now()}-${sent}`,\n      role: \"user\",\n      content,\n    });\n    await copilotkit.runAgent({ agent });\n  } catch (error) {\n    failure ??= error instanceof Error ? error : new Error(String(error));\n  } finally {\n    subscription.unsubscribe();\n  }\n  try {\n    if (failure) takeBack(agent, before, threadId);\n  } catch (error) {\n    console.error(\"Could not take the failed turn back:\", error);\n  }\n  return failure;\n}\n\n/**\n * Removes the messages added since `before` (their ids), such as the user\n * message and a partial reply. It keeps the surfaces: the provider keeps\n * every surface that a run rendered, and the model still sees it, so the\n * screen shows it too.\n */\nexport function takeBack(\n  agent: Agent,\n  before: readonly string[],\n  threadId: string | undefined,\n) {\n  // The agent moved to another thread: those messages are not this turn's.\n  if (agent.threadId !== threadId) return;\n  const kept = new Set(before);\n  agent.setMessages(\n    agent.messages.filter(\n      (message) => kept.has(message.id) || isGenerativeUIActivity(message),\n    ),\n  );\n}\n\n/**\n * An activity message that GenerativeUIActivity draws: its surface is aimed at\n * the chat (the target it shows) and the agent has not deleted it.\n */\nexport function isChatSurface(message: GenerativeUIActivityMessage) {\n  if (!isGenerativeUIActivity(message)) return false;\n  const content = message.content as {\n    target?: unknown;\n    operations?: unknown;\n  } | null;\n  const operations = Array.isArray(content?.operations)\n    ? content.operations\n    : [];\n  return (\n    content?.target === \"chat\" &&\n    !operations.some(\n      (op) => typeof op === \"object\" && op !== null && \"deleteSurface\" in op,\n    )\n  );\n}",
+   "rendered": true
+  },
+  {
+   "lang": "tsx",
+   "title": "src/ChatScreen.tsx",
+   "code": "import { useRef, useState } from \"react\";\nimport {\n  FlatList,\n  Text,\n  TextInput,\n  TouchableOpacity,\n  View,\n} from \"react-native\";\nimport { useAgent, useCopilotKit } from \"@copilotkit/react-native/headless\";\nimport {\n  GenerativeUIActivity,\n  isGenerativeUIActivity,\n} from \"@copilotkit/react-native/generative-ui\";\nimport { isChatSurface, runTurn } from \"./agentTurns\";\n\n// A separator rather than `gap`, which needs React Native 0.71.\nconst Separator = () => <View style={{ height: 8 }} />;\n\nexport function ChatScreen() {\n  const [text, setText] = useState(\"\");\n  const [error, setError] = useState<string>();\n  const { copilotkit } = useCopilotKit();\n  // Until the runtime connects, `agent` is a stand-in (`isReady` is false). The\n  // registered agent replaces it, so a message sent to the stand-in is lost.\n  const { agent, isReady } = useAgent({ agentId: \"default\" });\n  // Set at once, so a second tap before the next render does not send twice.\n  const sending = useRef(false);\n  const [isSending, setIsSending] = useState(false);\n  // One run of this agent at a time, including a run that a click on a surface\n  // started.\n  const busy = isSending || agent.isRunning;\n  const canSend = isReady && !busy;\n\n  // A row only for what renders: a surface aimed at a named area renders in its\n  // GenerativeUISurface, and a deleted surface renders nothing.\n  const messages = agent.messages.filter(\n    (message) =>\n      isChatSurface(message) ||\n      ((message.role === \"user\" || message.role === \"assistant\") &&\n        typeof message.content === \"string\" &&\n        message.content.length > 0),\n  );\n\n  const send = async () => {\n    const content = text.trim();\n    if (!content || !canSend || sending.current) return;\n    sending.current = true;\n    setIsSending(true);\n    setText(\"\");\n    setError(undefined);\n    try {\n      const failure = await runTurn(copilotkit, agent, content);\n      if (failure) {\n        // runTurn took the message back. Put its text back, unless the user typed again.\n        setText((current) => (current === \"\" ? content : current));\n        setError(failure.message);\n      }\n    } finally {\n      sending.current = false;\n      setIsSending(false);\n    }\n  };\n\n  return (\n    <View style={{ flex: 1, paddingTop: 48 }}>\n      <FlatList\n        data={messages}\n        keyExtractor={(message) => message.id}\n        contentContainerStyle={{ padding: 12 }}\n        ItemSeparatorComponent={Separator}\n        renderItem={({ item }) =>\n          isGenerativeUIActivity(item) ? (\n            <GenerativeUIActivity message={item} agent={agent} />\n          ) : (\n            <Text\n              style={{\n                alignSelf: item.role === \"user\" ? \"flex-end\" : \"flex-start\",\n              }}\n            >\n              {String(item.content)}\n            </Text>\n          )\n        }\n      />\n      {error ? (\n        <Text\n          accessibilityRole=\"alert\"\n          style={{ color: \"#dc2626\", paddingHorizontal: 12 }}\n        >\n          Could not send: {error}\n        </Text>\n      ) : null}\n      <View style={{ flexDirection: \"row\", padding: 8 }}>\n        <TextInput\n          style={{ flex: 1, borderWidth: 1, borderRadius: 8, padding: 8 }}\n          value={text}\n          onChangeText={setText}\n          placeholder={isReady ? \"Type a message...\" : \"Connecting...\"}\n        />\n        <TouchableOpacity\n          onPress={send}\n          disabled={!canSend}\n          accessibilityState={{ disabled: !canSend, busy }}\n          style={{ padding: 8, opacity: canSend ? 1 : 0.4 }}\n        >\n          <Text>{busy ? \"Replying...\" : \"Send\"}</Text>\n        </TouchableOpacity>\n      </View>\n    </View>\n  );\n}",
+   "rendered": true
+  },
+  {
+   "lang": "ts",
+   "title": "src/main.ts",
+   "code": "import { createApp } from \"vue\";\nimport App from \"./App.vue\";\nimport \"@copilotkit/vue/styles.css\";\n\ncreateApp(App).mount(\"#app\");",
+   "rendered": true
+  },
+  {
+   "lang": "vue",
+   "title": "src/App.vue",
+   "code": "<script setup lang=\"ts\">\nimport { CopilotChat, CopilotKitProvider } from \"@copilotkit/vue/v2\";\nimport { standardUI } from \"@copilotkit/vue/v2/generative-ui\";\n</script>\n\n<template>\n  <CopilotKitProvider\n    runtime-url=\"http://localhost:8200/api/copilotkit\"\n    :generativeUI=\"{ ui: standardUI }\"\n  >\n    <div style=\"height: 100vh\">\n      <CopilotChat />\n    </div>\n  </CopilotKitProvider>\n</template>",
+   "rendered": true
+  },
+  {
+   "lang": "bash",
+   "title": null,
+   "code": "npm install chart.js maplibre-gl",
+   "rendered": true
+  },
+  {
+   "lang": "ts",
+   "title": "src/main.ts",
+   "code": "import { createApp } from \"vue\";\nimport { GenerativeUIChart } from \"@copilotkit/vue/v2/generative-ui/chart\";\nimport { GenerativeUIMap } from \"@copilotkit/vue/v2/generative-ui/map\";\nimport App from \"./App.vue\";\nimport \"@copilotkit/vue/styles.css\";\n\ncreateApp(App).use(GenerativeUIChart).use(GenerativeUIMap).mount(\"#app\");",
+   "rendered": true
+  },
+  {
+   "lang": "text",
+   "title": null,
+   "code": "Compare the Starter, Team, and Enterprise plans in a table",
+   "rendered": true
+  }
+ ],
+ "ms-agent-harness-dotnet__generative-ui__components__catalogs": [
+  {
+   "lang": "tsx",
+   "title": "app/catalog.tsx",
+   "code": "import { z } from \"zod\";\nimport {\n  createGenerativeUI,\n  type GenerativeUIComponentProps,\n} from \"@copilotkit/react-core/v2/generative-ui\";\n\nfunction ProductGrid({ title, children }: GenerativeUIComponentProps<typeof shopUI, \"ProductGrid\">) {\n  return (\n    <section>\n      {title ? <h3>{title}</h3> : null}\n      <div className=\"grid grid-cols-2 gap-4\">{children}</div>\n    </section>\n  );\n}\n\nfunction ProductCard({ name, price, imageUrl }: GenerativeUIComponentProps<typeof shopUI, \"ProductCard\">) {\n  return (\n    <article>\n      <img src={imageUrl} alt={name} />\n      <h4>{name}</h4>\n      <p>${price}</p>\n    </article>\n  );\n}\n\nexport const shopUI = createGenerativeUI({\n  id: \"acme/shop@1\",\n  components: {\n    ProductGrid: {\n      component: ProductGrid,\n      description: \"A grid of products. Put the ids of ProductCard components in children.\",\n      props: z.object({ title: z.string().optional() }),\n      slots: { children: \"multiple\" },\n    },\n    ProductCard: {\n      component: ProductCard,\n      description: \"One product. Copy every value from a product of a tool result.\",\n      props: z.object({ name: z.string(), price: z.number(), imageUrl: z.string() }),\n    },\n  },\n});",
+   "rendered": true
+  },
+  {
+   "lang": "ts",
+   "title": "src/app/shop-ui.ts",
+   "code": "import { Component, input } from \"@angular/core\";\nimport { z } from \"zod\";\nimport {\n  CopilotGenerativeUIChildren,\n  createGenerativeUI,\n  type GenerativeUIChildren,\n} from \"@copilotkit/angular/generative-ui\";\n\n@Component({\n  selector: \"app-product-grid\",\n  imports: [CopilotGenerativeUIChildren],\n  template: `\n    <section>\n      @if (title(); as title) {\n        <h3>{{ title }}</h3>\n      }\n      <div class=\"grid grid-cols-2 gap-4\">\n        <ng-container *copilotGenerativeUIChildren=\"children()\" />\n      </div>\n    </section>\n  `,\n})\nexport class ProductGrid {\n  readonly title = input<string>();\n  readonly children = input<GenerativeUIChildren>();\n}\n\n@Component({\n  selector: \"app-product-card\",\n  template: `\n    <article>\n      <img [src]=\"imageUrl()\" [alt]=\"name()\" />\n      <h4>{{ name() }}</h4>\n      <p>{{ \"$\" + price() }}</p>\n    </article>\n  `,\n})\nexport class ProductCard {\n  readonly name = input.required<string>();\n  readonly price = input.required<number>();\n  readonly imageUrl = input.required<string>();\n}\n\nexport const shopUI = createGenerativeUI({\n  id: \"acme/shop@1\",\n  components: {\n    ProductGrid: {\n      component: ProductGrid,\n      description: \"A grid of products. Put the ids of ProductCard components in children.\",\n      props: z.object({ title: z.string().optional() }),\n      slots: { children: \"multiple\" },\n    },\n    ProductCard: {\n      component: ProductCard,\n      description: \"One product. Copy every value from a product of a tool result.\",\n      props: z.object({ name: z.string(), price: z.number(), imageUrl: z.string() }),\n    },\n  },\n});",
+   "rendered": true
+  },
+  {
+   "lang": "tsx",
+   "title": "src/shopUI.tsx",
+   "code": "import { Image, StyleSheet, Text, View } from \"react-native\";\nimport { z } from \"zod\";\nimport {\n  createGenerativeUI,\n  type GenerativeUIComponentProps,\n} from \"@copilotkit/react-native/generative-ui\";\n\nfunction ProductGrid({ title, children }: GenerativeUIComponentProps<typeof shopUI, \"ProductGrid\">) {\n  return (\n    <View>\n      {title ? <Text style={styles.title}>{title}</Text> : null}\n      <View style={styles.grid}>{children}</View>\n    </View>\n  );\n}\n\nfunction ProductCard({ name, price, imageUrl }: GenerativeUIComponentProps<typeof shopUI, \"ProductCard\">) {\n  return (\n    <View style={styles.card}>\n      <Image source={{ uri: imageUrl }} style={styles.image} accessibilityLabel={name} />\n      <Text style={styles.name}>{name}</Text>\n      <Text>${price}</Text>\n    </View>\n  );\n}\n\nexport const shopUI = createGenerativeUI({\n  id: \"acme/shop@1\",\n  components: {\n    ProductGrid: {\n      component: ProductGrid,\n      description: \"A grid of products. Put the ids of ProductCard components in children.\",\n      props: z.object({ title: z.string().optional() }),\n      slots: { children: \"multiple\" },\n    },\n    ProductCard: {\n      component: ProductCard,\n      description: \"One product. Copy every value from a product of a tool result.\",\n      props: z.object({ name: z.string(), price: z.number(), imageUrl: z.string() }),\n    },\n  },\n});\n\nconst styles = StyleSheet.create({\n  title: { fontSize: 17, fontWeight: \"600\", marginBottom: 8 },\n  grid: { flexDirection: \"row\", flexWrap: \"wrap\" },\n  // A fixed width, not a percentage: when the agent sends an `accessibility`\n  // envelope, the card sits in a wrapper View, and a percentage would resolve\n  // against that wrapper rather than the grid (see below).\n  // Margins rather than `gap`, which needs React Native 0.71.\n  card: { width: 160, marginRight: 12, marginBottom: 12 },\n  image: { aspectRatio: 1, borderRadius: 8 },\n  name: { fontWeight: \"600\", marginTop: 4 },\n});",
+   "rendered": true
+  },
+  {
+   "lang": "vue",
+   "title": "src/components/ProductGrid.vue",
+   "code": "<script setup lang=\"ts\">\ndefineProps<{ title?: string }>();\n</script>\n\n<template>\n  <section>\n    <h3 v-if=\"title\">{{ title }}</h3>\n    <div class=\"grid grid-cols-2 gap-4\">\n      <slot name=\"children\" />\n    </div>\n  </section>\n</template>",
+   "rendered": true
+  },
+  {
+   "lang": "vue",
+   "title": "src/components/ProductCard.vue",
+   "code": "<script setup lang=\"ts\">\ndefineProps<{ name: string; price: number; imageUrl: string }>();\n</script>\n\n<template>\n  <article>\n    <img :src=\"imageUrl\" :alt=\"name\" />\n    <h4>{{ name }}</h4>\n    <p>{{ \"$\" + price }}</p>\n  </article>\n</template>",
+   "rendered": true
+  },
+  {
+   "lang": "ts",
+   "title": "src/shop-ui.ts",
+   "code": "import { z } from \"zod\";\nimport { createGenerativeUI } from \"@copilotkit/vue/v2/generative-ui\";\nimport ProductCard from \"./components/ProductCard.vue\";\nimport ProductGrid from \"./components/ProductGrid.vue\";\n\nexport const shopUI = createGenerativeUI({\n  id: \"acme/shop@1\",\n  components: {\n    ProductGrid: {\n      component: ProductGrid,\n      description: \"A grid of products. Put the ids of ProductCard components in children.\",\n      props: z.object({ title: z.string().optional() }),\n      slots: { children: \"multiple\" },\n    },\n    ProductCard: {\n      component: ProductCard,\n      description: \"One product. Copy every value from a product of a tool result.\",\n      props: z.object({ name: z.string(), price: z.number(), imageUrl: z.string() }),\n    },\n  },\n});",
+   "rendered": true
+  },
+  {
+   "lang": "tsx",
+   "title": null,
+   "code": "<CopilotKitProvider runtimeUrl=\"/api/copilotkit\" generativeUI={{ ui: shopUI }}>",
+   "rendered": true
+  },
+  {
+   "lang": "ts",
+   "title": "src/app/app.config.ts",
+   "code": "providers: [\n  provideCopilotKit({ runtimeUrl: \"/api/copilotkit\" }),\n  provideGenerativeUI({ ui: shopUI }),\n],",
+   "rendered": true
+  },
+  {
+   "lang": "tsx",
+   "title": "App.tsx",
+   "code": "import { Platform } from \"react-native\";\nimport { CopilotKitProvider } from \"@copilotkit/react-native/headless\";\nimport { GenerativeUIProvider } from \"@copilotkit/react-native/generative-ui\";\nimport { shopUI } from \"./src/shopUI\";\nimport { ShopScreen } from \"./src/ShopScreen\";\n\n// The Android emulator reaches your machine at 10.0.2.2, not localhost.\nconst runtimeUrl =\n  Platform.OS === \"android\"\n    ? \"http://10.0.2.2:8200/api/copilotkit\"\n    : \"http://localhost:8200/api/copilotkit\";\n\nexport default function App() {\n  return (\n    <CopilotKitProvider runtimeUrl={runtimeUrl}>\n      <GenerativeUIProvider ui={shopUI}>\n        <ShopScreen />\n      </GenerativeUIProvider>\n    </CopilotKitProvider>\n  );\n}",
+   "rendered": true
+  },
+  {
+   "lang": "vue",
+   "title": null,
+   "code": "<CopilotKitProvider runtime-url=\"/api/copilotkit\" :generativeUI=\"{ ui: shopUI }\">",
+   "rendered": true
+  },
+  {
+   "lang": "tsx",
+   "title": null,
+   "code": "function ProductCard(props: GenerativeUIComponentProps<typeof shopUI, \"ProductCard\">) {\n  props.price; // number\n  props.color; // type error: not a prop of ProductCard\n}",
+   "rendered": true
+  },
+  {
+   "lang": "ts",
+   "title": null,
+   "code": "import type { GenerativeUIComponentInputs } from \"@copilotkit/angular/generative-ui\";\n\ntype ProductCardInputs = GenerativeUIComponentInputs<typeof shopUI, \"ProductCard\">;\n\nexport class ProductCard {\n  readonly price = input.required<ProductCardInputs[\"price\"]>(); // number\n  readonly color = input<ProductCardInputs[\"color\"]>(); // type error: not a prop of ProductCard\n}",
+   "rendered": true
+  },
+  {
+   "lang": "tsx",
+   "title": null,
+   "code": "import type { GenerativeUIComponentProps } from \"@copilotkit/react-native/generative-ui\";\n\nfunction ProductCard(props: GenerativeUIComponentProps<typeof shopUI, \"ProductCard\">) {\n  props.price; // number\n  props.color; // type error: not a prop of ProductCard\n}",
+   "rendered": true
+  },
+  {
+   "lang": "ts",
+   "title": null,
+   "code": "import { h } from \"vue\";\nimport type { GenerativeUIComponentProps } from \"@copilotkit/vue/v2/generative-ui\";\n\nfunction ProductCard(props: GenerativeUIComponentProps<typeof shopUI, \"ProductCard\">) {\n  props.price; // number\n  props.color; // type error: not a prop of ProductCard\n  return h(\"article\", props.name);\n}",
+   "rendered": true
+  },
+  {
+   "lang": "ts",
+   "title": null,
+   "code": "import { z } from \"zod\";\n\nprops: z.object({ name: z.string(), price: z.number() }),",
+   "rendered": true
+  },
+  {
+   "lang": "ts",
+   "title": null,
+   "code": "import * as v from \"valibot\";\nimport { toStandardJsonSchema } from \"@valibot/to-json-schema\";\n\nprops: toStandardJsonSchema(v.object({ name: v.string(), price: v.number() })),",
+   "rendered": true
+  },
+  {
+   "lang": "ts",
+   "title": null,
+   "code": "import { createGenerativeUI, standardUI } from \"@copilotkit/react-core/v2/generative-ui\";\n\nexport const appUI = createGenerativeUI({\n  id: \"acme/app@1\",\n  extends: [standardUI, cartUI],\n  components: { Hero: { component: Hero, props: z.object({ title: z.string() }) } },\n});",
+   "rendered": true
+  },
+  {
+   "lang": "ts",
+   "title": null,
+   "code": "import { createGenerativeUI, standardUI } from \"@copilotkit/angular/generative-ui\";\n\nexport const appUI = createGenerativeUI({\n  id: \"acme/app@1\",\n  extends: [standardUI, cartUI],\n  components: { Hero: { component: Hero, props: z.object({ title: z.string() }) } },\n});",
+   "rendered": true
+  },
+  {
+   "lang": "ts",
+   "title": null,
+   "code": "import { createGenerativeUI } from \"@copilotkit/react-native/generative-ui\";\n\nexport const appUI = createGenerativeUI({\n  id: \"acme/app@1\",\n  extends: [shopUI, cartUI],\n  components: { Hero: { component: Hero, props: z.object({ title: z.string() }) } },\n});",
+   "rendered": true
+  },
+  {
+   "lang": "ts",
+   "title": null,
+   "code": "import { createGenerativeUI, standardUI } from \"@copilotkit/vue/v2/generative-ui\";\n\nexport const appUI = createGenerativeUI({\n  id: \"acme/app@1\",\n  extends: [standardUI, cartUI],\n  components: { Hero: { component: Hero, props: z.object({ title: z.string() }) } },\n});",
+   "rendered": true
+  },
+  {
+   "lang": "ts",
+   "title": null,
+   "code": "import { exportA2UICatalog } from \"@copilotkit/react-core/v2/generative-ui\";\n\nconst catalog = exportA2UICatalog(appUI, { title: \"Acme app\" });\nfs.writeFileSync(\"acme-catalog.json\", JSON.stringify(catalog, null, 2));",
+   "rendered": true
+  },
+  {
+   "lang": "ts",
+   "title": null,
+   "code": "import { exportA2UICatalog } from \"@copilotkit/angular/generative-ui\";\n\nconst catalog = exportA2UICatalog(appUI, { title: \"Acme app\" });\nfs.writeFileSync(\"acme-catalog.json\", JSON.stringify(catalog, null, 2));",
+   "rendered": true
+  },
+  {
+   "lang": "ts",
+   "title": null,
+   "code": "import { exportA2UICatalog } from \"@copilotkit/react-native/generative-ui\";\n\nconst catalog = exportA2UICatalog(appUI, { title: \"Acme app\" });\nconsole.log(JSON.stringify(catalog, null, 2));",
+   "rendered": true
+  },
+  {
+   "lang": "ts",
+   "title": null,
+   "code": "import { exportA2UICatalog } from \"@copilotkit/vue/v2/generative-ui\";\n\nconst catalog = exportA2UICatalog(appUI, { title: \"Acme app\" });\nfs.writeFileSync(\"acme-catalog.json\", JSON.stringify(catalog, null, 2));",
+   "rendered": true
+  },
+  {
+   "lang": "tsx",
+   "title": null,
+   "code": "const ui = createGenerativeUI({\n  id: \"acme/panel@1\",\n  components: {\n    Panel: {\n      component: Panel,\n      props: z.object({ title: z.string(), color: z.string().optional() }),\n      slots: { children: \"multiple\" },\n      parameterOrder: [\"title\", \"children\"],\n    },\n  },\n});",
+   "rendered": true
+  }
+ ],
+ "ms-agent-harness-dotnet__generative-ui__components__from-a2ui": [
+  {
+   "lang": "tsx",
+   "title": null,
+   "code": "import { basicCatalogV1 } from \"@copilotkit/a2ui-renderer\";\n\n<CopilotKit runtimeUrl=\"/api/copilotkit\" a2ui={{ catalog: basicCatalogV1 }}>\n  {/* Your app */}\n</CopilotKit>",
+   "rendered": true
+  },
+  {
+   "lang": "tsx",
+   "title": null,
+   "code": "import { z } from \"zod\";\nimport {\n  createCatalog,\n  DynamicStringSchemaV1,\n} from \"@copilotkit/a2ui-renderer\";\n\nconst myCatalog = createCatalog(\n  { Greeting: { props: z.object({ name: DynamicStringSchemaV1 }) } },\n  { Greeting: ({ props }) => <p>Hello {props.name}</p> },\n  {\n    catalogId: \"acme/greetings@1\",\n    protocolVersion: \"1.0\",\n    includeBasicCatalog: true,\n  },\n);",
+   "rendered": true
+  },
+  {
+   "lang": "tsx",
+   "title": "Before",
+   "code": "<CopilotKit runtimeUrl=\"/api/copilotkit\" a2ui={{ catalog: myCatalog }}>",
+   "rendered": true
+  },
+  {
+   "lang": "tsx",
+   "title": "After",
+   "code": "<CopilotKitProvider runtimeUrl=\"/api/copilotkit\" generativeUI={{ ui: appUI }}>",
+   "rendered": true
+  },
+  {
+   "lang": "ts",
+   "title": "Before",
+   "code": "provideCopilotKit({ runtimeUrl: \"/api/copilotkit\", a2ui: { catalog: myCatalog } }),",
+   "rendered": true
+  },
+  {
+   "lang": "ts",
+   "title": "After",
+   "code": "provideCopilotKit({ runtimeUrl: \"/api/copilotkit\" }),\nprovideGenerativeUI({ ui: appUI }),",
+   "rendered": true
+  },
+  {
+   "lang": "vue",
+   "title": "Before",
+   "code": "<CopilotKitProvider runtime-url=\"/api/copilotkit\" :a2ui=\"{ catalog: vueBasicCatalog }\">",
+   "rendered": true
+  },
+  {
+   "lang": "vue",
+   "title": "After",
+   "code": "<CopilotKitProvider runtime-url=\"/api/copilotkit\" :generativeUI=\"{ ui: appUI }\">",
+   "rendered": true
+  },
+  {
+   "lang": "ts",
+   "title": "Runtime, before",
+   "code": "const runtime = new CopilotRuntime({\n  agents,\n  a2ui: { injectA2UITool: false, agents: [\"shop\"] },\n});",
+   "rendered": true
+  },
+  {
+   "lang": "ts",
+   "title": "Runtime, after",
+   "code": "// Nothing: a run that carries a catalog gets the render_ui tool and the guide.\n// To force or limit it: generativeUI: true, or generativeUI: { agents: [\"shop\"] }.\nconst runtime = new CopilotRuntime({ agents });",
+   "rendered": true
+  },
+  {
+   "lang": "ts",
+   "title": "Before",
+   "code": "import { createCatalog, DynamicStringSchema } from \"@copilotkit/a2ui-renderer\";\n\nconst definitions = {\n  Airport: {\n    props: z.object({ code: DynamicStringSchema, city: DynamicStringSchema }),\n  },\n  Arrow: { props: z.object({}) },\n};\nconst renderers = { Airport, Arrow };\nexport const myCatalog = createCatalog(definitions, renderers, {\n  catalogId: \"acme/flights\",\n  includeBasicCatalog: true,\n});",
+   "rendered": true
+  },
+  {
+   "lang": "ts",
+   "title": "Before",
+   "code": "import { createAngularCatalog, DynamicStringSchema } from \"@copilotkit/angular/a2ui\";\n\nconst definitions = {\n  Airport: {\n    props: z.object({ code: DynamicStringSchema, city: DynamicStringSchema }),\n  },\n  Arrow: { props: z.object({}) },\n};\nconst renderers = { Airport, Arrow };\nexport const myCatalog = createAngularCatalog(definitions, renderers, {\n  catalogId: \"acme/flights\",\n  includeBasicCatalog: true,\n});",
+   "rendered": true
+  },
+  {
+   "lang": "ts",
+   "title": "After",
+   "code": "import {\n  createGenerativeUI,\n  standardUI,\n} from \"@copilotkit/react-core/v2/generative-ui\";\n\nexport const appUI = createGenerativeUI({\n  id: \"acme/flights@1\",\n  extends: [standardUI],\n  components: {\n    Airport: {\n      component: Airport,\n      description: \"An airport by IATA code, with its city under it.\",\n      props: z.object({ code: z.string(), city: z.string() }),\n    },\n    Arrow: { component: Arrow, description: \"An arrow between two airports.\" },\n  },\n});",
+   "rendered": true
+  },
+  {
+   "lang": "ts",
+   "title": "After",
+   "code": "import {\n  createGenerativeUI,\n  standardUI,\n} from \"@copilotkit/angular/generative-ui\";\n\nexport const appUI = createGenerativeUI({\n  id: \"acme/flights@1\",\n  extends: [standardUI],\n  components: {\n    Airport: {\n      component: Airport,\n      description: \"An airport by IATA code, with its city under it.\",\n      props: z.object({ code: z.string(), city: z.string() }),\n    },\n    Arrow: { component: Arrow, description: \"An arrow between two airports.\" },\n  },\n});",
+   "rendered": true
+  },
+  {
+   "lang": "ts",
+   "title": "After",
+   "code": "import {\n  createGenerativeUI,\n  standardUI,\n} from \"@copilotkit/vue/v2/generative-ui\";\n\nexport const appUI = createGenerativeUI({\n  id: \"acme/flights@1\",\n  extends: [standardUI],\n  components: {\n    Airport: {\n      component: Airport,\n      description: \"An airport by IATA code, with its city under it.\",\n      props: z.object({ code: z.string(), city: z.string() }),\n    },\n    Arrow: { component: Arrow, description: \"An arrow between two airports.\" },\n  },\n});",
+   "rendered": true
+  }
+ ],
+ "ms-agent-harness-dotnet__generative-ui__components__markdown-mode": [
+  {
+   "lang": "markdown",
+   "title": null,
+   "code": "Here is an estimate you can play with:\n\n```a2ui\n{\"version\":\"1.0\",\"createSurface\":{\"surfaceId\":\"plan-estimator\",\"dataModel\":{\"seats\":10,\"price\":\"$290 / month\"},\"components\":[{\"id\":\"root\",\"component\":\"Card\",\"children\":[\"seats\",\"price\"]}]}}\n{\"version\":\"1.0\",\"updateComponents\":{\"surfaceId\":\"plan-estimator\",\"components\":[{\"id\":\"seats\",\"component\":\"Slider\",\"label\":\"Seats\",\"min\":1,\"max\":50,\"value\":{\"@path\":\"/seats\"}},{\"id\":\"price\",\"component\":\"Text\",\"text\":{\"@path\":\"/price\"}}]}}\n```\n\nMove the slider to change the seat count.",
+   "rendered": true
+  },
+  {
+   "lang": "tsx",
+   "title": "app/providers.tsx",
+   "code": "import { CopilotKitProvider } from \"@copilotkit/react-core/v2\";\nimport { standardUI } from \"@copilotkit/react-core/v2/generative-ui\";\n\n<CopilotKitProvider runtimeUrl=\"/api/copilotkit\" generativeUI={{ ui: standardUI, transport: \"markdown\" }}>\n  {children}\n</CopilotKitProvider>;",
+   "rendered": true
+  },
+  {
+   "lang": "ts",
+   "title": "src/app/app.config.ts",
+   "code": "import { provideCopilotKit } from \"@copilotkit/angular\";\nimport { provideGenerativeUI, standardUI } from \"@copilotkit/angular/generative-ui\";\n\nproviders: [\n  provideCopilotKit({ runtimeUrl: \"/api/copilotkit\" }),\n  provideGenerativeUI({ ui: standardUI, transport: \"markdown\" }),\n],",
+   "rendered": true
+  },
+  {
+   "lang": "vue",
+   "title": "src/App.vue",
+   "code": "<script setup lang=\"ts\">\nimport { CopilotKitProvider } from \"@copilotkit/vue/v2\";\nimport { standardUI } from \"@copilotkit/vue/v2/generative-ui\";\n</script>\n\n<template>\n  <CopilotKitProvider runtime-url=\"/api/copilotkit\" :generativeUI=\"{ ui: standardUI, transport: 'markdown' }\">\n    <slot />\n  </CopilotKitProvider>\n</template>",
+   "rendered": true
+  },
+  {
+   "lang": "tsx",
+   "title": null,
+   "code": "<CopilotKitProvider\n  runtimeUrl=\"/api/copilotkit\"\n  generativeUI={{ ui: standardUI, transport: \"markdown\", sendContext: false }}\n>",
+   "rendered": true
+  },
+  {
+   "lang": "ts",
+   "title": null,
+   "code": "provideGenerativeUI({ ui: standardUI, transport: \"markdown\", sendContext: false }),",
+   "rendered": true
+  },
+  {
+   "lang": "vue",
+   "title": null,
+   "code": "<CopilotKitProvider\n  runtime-url=\"/api/copilotkit\"\n  :generativeUI=\"{ ui: standardUI, transport: 'markdown', sendContext: false }\"\n>",
+   "rendered": true
+  },
+  {
+   "lang": "json",
+   "title": null,
+   "code": "{\n  \"1.0\": {\n    \"supportedCatalogIds\": [\"copilotkit/standard@1\"],\n    \"inlineCatalogs\": [\n      {\n        \"catalogId\": \"copilotkit/standard@1\",\n        \"protocolVersion\": \"1.0\",\n        \"components\": { \"Card\": { \"props\": { \"type\": \"object\" } } },\n        \"functions\": {},\n        \"instructions\": \"You can show interactive UI in your reply ...\"\n      }\n    ]\n  },\n  \"metadata\": {\n    \"extensions\": {\n      \"copilotkit_format\": 3,\n      \"copilotkit_transport\": \"markdown\",\n      \"copilotkit_targets\": [{ \"id\": \"chat\", \"kind\": \"chat\" }],\n      \"copilotkit_surfaces\": {},\n      \"copilotkit_contextSent\": false\n    }\n  }\n}",
+   "rendered": true
+  },
+  {
+   "lang": "python",
+   "title": null,
+   "code": "ui = input.forwarded_props[\"copilotkit\"][\"ui\"]\ncatalog = ui[\"1.0\"][\"inlineCatalogs\"][0]\nsystem = f\"{MY_PROMPT}\\n\\n{catalog['instructions']}\\n\\nComponents:\\n{json.dumps(catalog['components'])}\"",
+   "rendered": true
+  }
+ ],
+ "ms-agent-harness-dotnet__generative-ui__components__standard-catalog": [
+  {
+   "lang": "tsx",
+   "title": null,
+   "code": "import { standardUI } from \"@copilotkit/react-core/v2/generative-ui\";\n\n<CopilotKitProvider runtimeUrl=\"/api/copilotkit\" generativeUI={{ ui: standardUI }}>",
+   "rendered": true
+  },
+  {
+   "lang": "ts",
+   "title": "src/app/app.config.ts",
+   "code": "import { provideGenerativeUI, standardUI } from \"@copilotkit/angular/generative-ui\";\n\nproviders: [\n  provideCopilotKit({ runtimeUrl: \"/api/copilotkit\" }),\n  provideGenerativeUI({ ui: standardUI }),\n],",
+   "rendered": true
+  },
+  {
+   "lang": "vue",
+   "title": null,
+   "code": "<script setup lang=\"ts\">\nimport { CopilotKitProvider } from \"@copilotkit/vue/v2\";\nimport { standardUI } from \"@copilotkit/vue/v2/generative-ui\";\n</script>\n\n<template>\n  <CopilotKitProvider runtime-url=\"/api/copilotkit\" :generativeUI=\"{ ui: standardUI }\">\n    <slot />\n  </CopilotKitProvider>\n</template>",
+   "rendered": true
+  },
+  {
+   "lang": "ts",
+   "title": null,
+   "code": "import { createGenerativeUI, standardUI } from \"@copilotkit/react-core/v2/generative-ui\";\n\nexport const appUI = createGenerativeUI({\n  id: \"acme/app@1\",\n  extends: [standardUI],\n  components: {\n    ProductCard: { component: ProductCard, props: productSchema },\n  },\n});",
+   "rendered": true
+  },
+  {
+   "lang": "ts",
+   "title": null,
+   "code": "import { createGenerativeUI, standardUI } from \"@copilotkit/angular/generative-ui\";\n\nexport const appUI = createGenerativeUI({\n  id: \"acme/app@1\",\n  extends: [standardUI],\n  components: {\n    ProductCard: { component: ProductCard, props: productSchema },\n  },\n});",
+   "rendered": true
+  },
+  {
+   "lang": "ts",
+   "title": null,
+   "code": "import { createGenerativeUI, standardUI } from \"@copilotkit/vue/v2/generative-ui\";\n\nexport const appUI = createGenerativeUI({\n  id: \"acme/app@1\",\n  extends: [standardUI],\n  components: {\n    ProductCard: { component: ProductCard, props: productSchema },\n  },\n});",
+   "rendered": true
+  },
+  {
+   "lang": "ts",
+   "title": null,
+   "code": "export const appUI = createGenerativeUI({\n  id: \"acme/app@1\",\n  extends: [standardUI.omit([\"Map\", \"Video\", \"HtmlView\"])],\n  components: {},\n});",
+   "rendered": true
+  },
+  {
+   "lang": "tsx",
+   "title": null,
+   "code": "import {\n  createGenerativeUI,\n  standardUI,\n  type GenerativeUIComponentProps,\n} from \"@copilotkit/react-core/v2/generative-ui\";\n\nfunction MyCard({ children }: GenerativeUIComponentProps<typeof standardUI, \"Card\">) {\n  return <div className=\"rounded-2xl border p-6 shadow-sm\">{children}</div>;\n}\n\nexport const appUI = createGenerativeUI({\n  id: \"acme/app@1\",\n  extends: [standardUI],\n  overrides: { Card: { component: MyCard } },\n  components: {},\n});",
+   "rendered": true
+  },
+  {
+   "lang": "ts",
+   "title": null,
+   "code": "import { Component, input } from \"@angular/core\";\nimport {\n  CopilotGenerativeUIChildren,\n  createGenerativeUI,\n  standardUI,\n  type GenerativeUIChildren,\n} from \"@copilotkit/angular/generative-ui\";\n\n@Component({\n  selector: \"app-card\",\n  imports: [CopilotGenerativeUIChildren],\n  template: `\n    <div class=\"rounded-2xl border p-6 shadow-sm\">\n      <ng-container *copilotGenerativeUIChildren=\"child()\" />\n      <ng-container *copilotGenerativeUIChildren=\"children()\" />\n    </div>\n  `,\n})\nexport class MyCard {\n  readonly child = input<GenerativeUIChildren>();\n  readonly children = input<GenerativeUIChildren>();\n}\n\nexport const appUI = createGenerativeUI({\n  id: \"acme/app@1\",\n  extends: [standardUI],\n  overrides: { Card: { component: MyCard } },\n  components: {},\n});",
+   "rendered": true
+  },
+  {
+   "lang": "vue",
+   "title": "src/components/MyCard.vue",
+   "code": "<template>\n  <div class=\"rounded-2xl border p-6 shadow-sm\">\n    <slot name=\"child\" />\n    <slot name=\"children\" />\n  </div>\n</template>",
+   "rendered": true
+  },
+  {
+   "lang": "ts",
+   "title": null,
+   "code": "import { createGenerativeUI, standardUI } from \"@copilotkit/vue/v2/generative-ui\";\nimport MyCard from \"./components/MyCard.vue\";\n\nexport const appUI = createGenerativeUI({\n  id: \"acme/app@1\",\n  extends: [standardUI],\n  overrides: { Card: { component: MyCard } },\n  components: {},\n});",
+   "rendered": true
+  }
+ ],
+ "ms-agent-harness-dotnet__generative-ui__components__state-and-actions": [
+  {
+   "lang": "tsx",
+   "title": "app/catalog.tsx",
+   "code": "const cartSchema = z.object({\n  items: z.array(z.object({ productId: z.string(), quantity: z.number() })),\n});\n\nexport const shopUI = createGenerativeUI({\n  id: \"acme/shop@1\",\n  state: { cart: cartSchema },\n  components: {\n    ProductCard: {\n      component: ProductCard,\n      props: z.object({ productId: z.string(), name: z.string(), inCart: z.number() }),\n      bind: {\n        inCart: (state, { productId }) =>\n          state.cart.items.find((item) => item.productId === productId)?.quantity ?? 0,\n      },\n    },\n  },\n});",
+   "rendered": true
+  },
+  {
+   "lang": "ts",
+   "title": "src/app/shop-ui.ts",
+   "code": "const cartSchema = z.object({\n  items: z.array(z.object({ productId: z.string(), quantity: z.number() })),\n});\n\nexport const shopUI = createGenerativeUI({\n  id: \"acme/shop@1\",\n  state: { cart: cartSchema },\n  components: {\n    ProductCard: {\n      component: ProductCard,\n      props: z.object({ productId: z.string(), name: z.string(), inCart: z.number() }),\n      bind: {\n        inCart: (state, { productId }) =>\n          state.cart.items.find((item) => item.productId === productId)?.quantity ?? 0,\n      },\n    },\n  },\n});",
+   "rendered": true
+  },
+  {
+   "lang": "tsx",
+   "title": "src/shopUI.tsx",
+   "code": "const cartSchema = z.object({\n  items: z.array(z.object({ productId: z.string(), quantity: z.number() })),\n});\n\nexport const shopUI = createGenerativeUI({\n  id: \"acme/shop@1\",\n  state: { cart: cartSchema },\n  components: {\n    ProductCard: {\n      component: ProductCard,\n      props: z.object({ productId: z.string(), name: z.string(), inCart: z.number() }),\n      bind: {\n        inCart: (state, { productId }) =>\n          state.cart.items.find((item) => item.productId === productId)?.quantity ?? 0,\n      },\n    },\n  },\n});",
+   "rendered": true
+  },
+  {
+   "lang": "ts",
+   "title": "src/shop-ui.ts",
+   "code": "const cartSchema = z.object({\n  items: z.array(z.object({ productId: z.string(), quantity: z.number() })),\n});\n\nexport const shopUI = createGenerativeUI({\n  id: \"acme/shop@1\",\n  state: { cart: cartSchema },\n  components: {\n    ProductCard: {\n      component: ProductCard,\n      props: z.object({ productId: z.string(), name: z.string(), inCart: z.number() }),\n      bind: {\n        inCart: (state, { productId }) =>\n          state.cart.items.find((item) => item.productId === productId)?.quantity ?? 0,\n      },\n    },\n  },\n});",
+   "rendered": true
+  },
+  {
+   "lang": "tsx",
+   "title": null,
+   "code": "import { useGenerativeUIState } from \"@copilotkit/react-core/v2/generative-ui\";\n\nfunction CartState({ cart }: { cart: Cart }) {\n  useGenerativeUIState(shopUI, \"cart\", { items: cart.items });\n  return null;\n}",
+   "rendered": true
+  },
+  {
+   "lang": "ts",
+   "title": null,
+   "code": "import { Component, inject } from \"@angular/core\";\nimport { connectGenerativeUIState } from \"@copilotkit/angular/generative-ui\";\nimport { CartStore } from \"./cart.store\";\nimport { shopUI } from \"./shop-ui\";\n\n@Component({ /* ... */ })\nexport class CartState {\n  readonly #cart = inject(CartStore);\n\n  constructor() {\n    connectGenerativeUIState(shopUI, \"cart\", () => ({ items: this.#cart.items() }));\n  }\n}",
+   "rendered": true
+  },
+  {
+   "lang": "tsx",
+   "title": null,
+   "code": "import { useGenerativeUIState } from \"@copilotkit/react-native/generative-ui\";\n\nfunction CartState({ cart }: { cart: Cart }) {\n  useGenerativeUIState(shopUI, \"cart\", { items: cart.items });\n  return null;\n}",
+   "rendered": true
+  },
+  {
+   "lang": "vue",
+   "title": null,
+   "code": "<script setup lang=\"ts\">\nimport { useGenerativeUIState } from \"@copilotkit/vue/v2/generative-ui\";\nimport { useCartStore } from \"./cart-store\";\nimport { shopUI } from \"./shop-ui\";\n\nconst cart = useCartStore();\nuseGenerativeUIState(shopUI, \"cart\", () => ({ items: cart.items }));\n</script>",
+   "rendered": true
+  },
+  {
+   "lang": "tsx",
+   "title": "app/catalog.tsx",
+   "code": "export const shopUI = createGenerativeUI({\n  id: \"acme/shop@1\",\n  functions: {\n    addToCart: {\n      description: \"Add a product to the cart\",\n      parameters: z.object({ productId: z.string(), quantity: z.number().default(1) }),\n    },\n  },\n  components: {\n    ProductCard: {\n      component: ProductCard,\n      props: z.object({ productId: z.string(), name: z.string() }),\n      events: { onAddToCart: {} },\n    },\n  },\n});",
+   "rendered": true
+  },
+  {
+   "lang": "tsx",
+   "title": null,
+   "code": "import { useGenerativeUIFunction } from \"@copilotkit/react-core/v2/generative-ui\";\n\nfunction CartActions({ cart }: { cart: Cart }) {\n  useGenerativeUIFunction(shopUI, \"addToCart\", ({ productId, quantity }) => {\n    cart.addItem(productId, quantity);\n    return { added: productId };\n  });\n  return null;\n}",
+   "rendered": true
+  },
+  {
+   "lang": "ts",
+   "title": "src/app/shop-ui.ts",
+   "code": "export const shopUI = createGenerativeUI({\n  id: \"acme/shop@1\",\n  functions: {\n    addToCart: {\n      description: \"Add a product to the cart\",\n      parameters: z.object({ productId: z.string(), quantity: z.number().default(1) }),\n    },\n  },\n  components: {\n    ProductCard: {\n      component: ProductCard,\n      props: z.object({ productId: z.string(), name: z.string() }),\n      events: { onAddToCart: {} },\n    },\n  },\n});",
+   "rendered": true
+  },
+  {
+   "lang": "ts",
+   "title": null,
+   "code": "import { Component, inject } from \"@angular/core\";\nimport { registerGenerativeUIFunction } from \"@copilotkit/angular/generative-ui\";\nimport { CartStore } from \"./cart.store\";\nimport { shopUI } from \"./shop-ui\";\n\n@Component({ /* ... */ })\nexport class CartActions {\n  readonly #cart = inject(CartStore);\n\n  constructor() {\n    registerGenerativeUIFunction(shopUI, \"addToCart\", ({ productId, quantity }) => {\n      this.#cart.addItem(productId, quantity);\n      return { added: productId };\n    });\n  }\n}",
+   "rendered": true
+  },
+  {
+   "lang": "tsx",
+   "title": "src/shopUI.tsx",
+   "code": "export const shopUI = createGenerativeUI({\n  id: \"acme/shop@1\",\n  functions: {\n    addToCart: {\n      description: \"Add a product to the cart\",\n      parameters: z.object({ productId: z.string(), quantity: z.number().default(1) }),\n    },\n  },\n  components: {\n    ProductCard: {\n      component: ProductCard,\n      props: z.object({ productId: z.string(), name: z.string() }),\n      events: { onAddToCart: {} },\n    },\n  },\n});",
+   "rendered": true
+  },
+  {
+   "lang": "tsx",
+   "title": null,
+   "code": "import { useGenerativeUIFunction } from \"@copilotkit/react-native/generative-ui\";\n\nfunction CartActions({ cart }: { cart: Cart }) {\n  useGenerativeUIFunction(shopUI, \"addToCart\", ({ productId, quantity }) => {\n    cart.addItem(productId, quantity);\n    return { added: productId };\n  });\n  return null;\n}",
+   "rendered": true
+  },
+  {
+   "lang": "ts",
+   "title": "src/shop-ui.ts",
+   "code": "export const shopUI = createGenerativeUI({\n  id: \"acme/shop@1\",\n  functions: {\n    addToCart: {\n      description: \"Add a product to the cart\",\n      parameters: z.object({ productId: z.string(), quantity: z.number().default(1) }),\n    },\n  },\n  components: {\n    ProductCard: {\n      component: ProductCard,\n      props: z.object({ productId: z.string(), name: z.string() }),\n      events: { onAddToCart: {} },\n    },\n  },\n});",
+   "rendered": true
+  },
+  {
+   "lang": "vue",
+   "title": null,
+   "code": "<script setup lang=\"ts\">\nimport { useGenerativeUIFunction } from \"@copilotkit/vue/v2/generative-ui\";\nimport { useCartStore } from \"./cart-store\";\nimport { shopUI } from \"./shop-ui\";\n\nconst cart = useCartStore();\nuseGenerativeUIFunction(shopUI, \"addToCart\", ({ productId, quantity }) => {\n  cart.addItem(productId, quantity);\n  return { added: productId };\n});\n</script>",
+   "rendered": true
+  },
+  {
+   "lang": "tsx",
+   "title": null,
+   "code": "import { useState } from \"react\";\nimport type { GenerativeUIComponentProps } from \"@copilotkit/react-core/v2/generative-ui\";\n\nfunction ProductCard({ productId, name, onAddToCart }: GenerativeUIComponentProps<typeof shopUI, \"ProductCard\">) {\n  const [error, setError] = useState<string>();\n  return (\n    <article>\n      <h4>{name}</h4>\n      <button\n        onClick={async () => {\n          const result = await onAddToCart?.({ productId });\n          if (result) setError(result.ok ? undefined : result.error.message);\n        }}\n      >\n        Add to cart\n      </button>\n      {error ? <p role=\"alert\">{error}</p> : null}\n    </article>\n  );\n}",
+   "rendered": true
+  },
+  {
+   "lang": "ts",
+   "title": null,
+   "code": "import { Component, input, signal } from \"@angular/core\";\nimport type { GenerativeUIEventHandler } from \"@copilotkit/angular/generative-ui\";\nimport { shopUI } from \"./shop-ui\";\n\n@Component({\n  selector: \"app-product-card\",\n  template: `\n    <article>\n      <h4>{{ name() }}</h4>\n      @if (onAddToCart(); as addToCart) {\n        <button (click)=\"add(addToCart)\">Add to cart</button>\n      }\n      @if (error(); as error) {\n        <p role=\"alert\">{{ error }}</p>\n      }\n    </article>\n  `,\n})\nexport class ProductCard {\n  readonly productId = input.required<string>();\n  readonly name = input.required<string>();\n  readonly onAddToCart = input<GenerativeUIEventHandler<typeof shopUI, \"onAddToCart\">>();\n  protected readonly error = signal<string | undefined>(undefined);\n\n  protected async add(addToCart: GenerativeUIEventHandler<typeof shopUI, \"onAddToCart\">) {\n    const result = await addToCart({ productId: this.productId() });\n    this.error.set(result.ok ? undefined : result.error.message);\n  }\n}",
+   "rendered": true
+  },
+  {
+   "lang": "tsx",
+   "title": null,
+   "code": "import { useState } from \"react\";\nimport { Pressable, Text, View } from \"react-native\";\nimport type { GenerativeUIComponentProps } from \"@copilotkit/react-native/generative-ui\";\n\nfunction ProductCard({ productId, name, onAddToCart }: GenerativeUIComponentProps<typeof shopUI, \"ProductCard\">) {\n  const [error, setError] = useState<string>();\n  return (\n    <View>\n      <Text>{name}</Text>\n      <Pressable\n        accessibilityRole=\"button\"\n        onPress={async () => {\n          const result = await onAddToCart?.({ productId });\n          if (result) setError(result.ok ? undefined : result.error.message);\n        }}\n      >\n        <Text>Add to cart</Text>\n      </Pressable>\n      {error ? <Text accessibilityRole=\"alert\">{error}</Text> : null}\n    </View>\n  );\n}",
+   "rendered": true
+  },
+  {
+   "lang": "vue",
+   "title": "src/components/ProductCard.vue",
+   "code": "<script setup lang=\"ts\">\nimport { ref } from \"vue\";\nimport type { GenerativeUIInvokeResult } from \"@copilotkit/vue/v2/generative-ui\";\n\nconst props = defineProps<{\n  productId: string;\n  name: string;\n  onAddToCart?: (args: { productId: string }) => Promise<GenerativeUIInvokeResult>;\n}>();\nconst error = ref<string>();\n\nasync function add() {\n  const result = await props.onAddToCart?.({ productId: props.productId });\n  if (result && !result.ok) error.value = result.error.message;\n}\n</script>\n\n<template>\n  <article>\n    <h4>{{ name }}</h4>\n    <button v-if=\"onAddToCart\" @click=\"add\">Add to cart</button>\n    <p v-if=\"error\" role=\"alert\">{{ error }}</p>\n  </article>\n</template>",
+   "rendered": true
+  },
+  {
+   "lang": "ts",
+   "title": null,
+   "code": "functions: {\n  addToCart: { parameters: z.object({ productId: z.string() }), allowedCallers: \"rendererOrAgent\", returnType: \"object\" },\n  track: { parameters: z.object({ event: z.string() }), returnType: \"void\" },\n  reload: { parameters: z.object({}), allowedCallers: \"agentOnly\" },\n},",
+   "rendered": true
+  },
+  {
+   "lang": "ts",
+   "title": null,
+   "code": "events: {\n  onChoose: {\n    description: \"The user picked a plan\",\n    parameters: z.object({ plan: z.string() }),\n  },\n},",
+   "rendered": true
+  },
+  {
+   "lang": "tsx",
+   "title": null,
+   "code": "CheckoutForm: {\n  component: CheckoutForm,\n  props: z.object({ email: z.string().optional() }),\n  writable: [\"email\"],\n},",
+   "rendered": true
+  },
+  {
+   "lang": "tsx",
+   "title": null,
+   "code": "function CheckoutForm({ email, setEmail }: GenerativeUIComponentProps<typeof shopUI, \"CheckoutForm\">) {\n  return <input value={email ?? \"\"} onChange={(event) => setEmail(event.target.value)} />;\n}",
+   "rendered": true
+  },
+  {
+   "lang": "ts",
+   "title": null,
+   "code": "import { Component, model } from \"@angular/core\";\n\n@Component({\n  selector: \"app-checkout-form\",\n  template: `<input [value]=\"email() ?? ''\" (input)=\"email.set($any($event.target).value)\" />`,\n})\nexport class CheckoutForm {\n  readonly email = model<string>();\n}",
+   "rendered": true
+  },
+  {
+   "lang": "tsx",
+   "title": null,
+   "code": "import { TextInput } from \"react-native\";\nimport type { GenerativeUIComponentProps } from \"@copilotkit/react-native/generative-ui\";\n\nfunction CheckoutForm({ email, setEmail }: GenerativeUIComponentProps<typeof shopUI, \"CheckoutForm\">) {\n  return <TextInput value={email ?? \"\"} onChangeText={setEmail} keyboardType=\"email-address\" />;\n}",
+   "rendered": true
+  },
+  {
+   "lang": "vue",
+   "title": "src/components/CheckoutForm.vue",
+   "code": "<script setup lang=\"ts\">\nconst email = defineModel<string>(\"email\");\n</script>\n\n<template>\n  <input v-model=\"email\" />\n</template>",
+   "rendered": true
+  }
+ ],
+ "ms-agent-harness-dotnet__generative-ui__components__surfaces": [
+  {
+   "lang": "tsx",
+   "title": "app/page.tsx",
+   "code": "import { GenerativeUISurface } from \"@copilotkit/react-core/v2/generative-ui\";\nimport { shopUI } from \"./catalog\";\n\nexport function FeaturedProducts({ products }: { products: Product[] }) {\n  return (\n    <GenerativeUISurface\n      id=\"featured\"\n      ui={shopUI}\n      description=\"The Featured Products row of the home page. When the customer asks to see products here, show them as a ProductGrid with one ProductCard for each product. When they ask for the featured products again, delete this surface.\"\n      components={[\"ProductGrid\", \"ProductCard\"]}\n      fallback={<ProductRow products={products} />}\n    />\n  );\n}",
+   "rendered": true
+  },
+  {
+   "lang": "ts",
+   "title": "src/app/featured-products.component.ts",
+   "code": "import { Component, input } from \"@angular/core\";\nimport { CopilotGenerativeUISurface } from \"@copilotkit/angular/generative-ui\";\nimport { ProductRow } from \"./product-row.component\";\nimport { shopUI } from \"./shop-ui\";\n\n@Component({\n  selector: \"app-featured-products\",\n  imports: [CopilotGenerativeUISurface, ProductRow],\n  template: `\n    <copilot-generative-ui-surface\n      id=\"featured\"\n      [ui]=\"shopUI\"\n      description=\"The Featured Products row of the home page. When the customer asks to see products here, show them as a ProductGrid with one ProductCard for each product. When they ask for the featured products again, delete this surface.\"\n      [components]=\"['ProductGrid', 'ProductCard']\"\n    >\n      <app-product-row [products]=\"products()\" />\n    </copilot-generative-ui-surface>\n  `,\n})\nexport class FeaturedProducts {\n  readonly products = input.required<Product[]>();\n  protected readonly shopUI = shopUI;\n}",
+   "rendered": true
+  },
+  {
+   "lang": "tsx",
+   "title": "src/FeaturedProducts.tsx",
+   "code": "import { GenerativeUISurface } from \"@copilotkit/react-native/generative-ui\";\nimport { ProductRow } from \"./ProductRow\";\nimport { shopUI } from \"./shopUI\";\n\nexport function FeaturedProducts({ products }: { products: Product[] }) {\n  return (\n    <GenerativeUISurface\n      id=\"featured\"\n      ui={shopUI}\n      description=\"The Featured Products row of the home screen. When the customer asks to see products here, show them as a ProductGrid with one ProductCard for each product. When they ask for the featured products again, delete this surface.\"\n      components={[\"ProductGrid\", \"ProductCard\"]}\n      fallback={<ProductRow products={products} />}\n      style={{ marginVertical: 16 }}\n    />\n  );\n}",
+   "rendered": true
+  },
+  {
+   "lang": "vue",
+   "title": "src/components/FeaturedProducts.vue",
+   "code": "<script setup lang=\"ts\">\nimport { GenerativeUISurface } from \"@copilotkit/vue/v2/generative-ui\";\nimport type { Product } from \"../product\";\nimport { shopUI } from \"../shop-ui\";\nimport ProductRow from \"./ProductRow.vue\";\n\ndefineProps<{ products: Product[] }>();\n</script>\n\n<template>\n  <GenerativeUISurface\n    id=\"featured\"\n    :ui=\"shopUI\"\n    description=\"The Featured Products row of the home page. When the customer asks to see products here, show them as a ProductGrid with one ProductCard for each product. When they ask for the featured products again, delete this surface.\"\n    :components=\"['ProductGrid', 'ProductCard']\"\n  >\n    <ProductRow :products=\"products\" />\n  </GenerativeUISurface>\n</template>",
+   "rendered": true
+  },
+  {
+   "lang": "tsx",
+   "title": "src/HomeSurfaces.tsx",
+   "code": "import { View } from \"react-native\";\nimport { useAgent } from \"@copilotkit/react-native/headless\";\nimport { GenerativeUIActivity } from \"@copilotkit/react-native/generative-ui\";\nimport { isChatSurface } from \"./agentTurns\";\n\nexport function HomeSurfaces() {\n  const { agent } = useAgent({ agentId: \"home\" });\n  // Every surface that renders here: aimed at the chat, and not deleted. Not only\n  // the latest activity message, which can be a deleted surface or one aimed at a\n  // page target, and render nothing.\n  const surfaces = agent.messages.filter(isChatSurface);\n  return (\n    <View>\n      {surfaces.map((message) => (\n        <GenerativeUIActivity key={message.id} message={message} agent={agent} />\n      ))}\n    </View>\n  );\n}",
+   "rendered": true
+  },
+  {
+   "lang": "tsx",
+   "title": null,
+   "code": "<GenerativeUISurface id=\"featured\" ui={shopUI} components={[\"ProductGrid\", \"ProductCard\"]} />",
+   "rendered": true
+  },
+  {
+   "lang": "html",
+   "title": null,
+   "code": "<copilot-generative-ui-surface id=\"featured\" [ui]=\"shopUI\" [components]=\"['ProductGrid', 'ProductCard']\" />",
+   "rendered": true
+  },
+  {
+   "lang": "tsx",
+   "title": null,
+   "code": "<GenerativeUISurface id=\"featured\" ui={shopUI} components={[\"ProductGrid\", \"ProductCard\"]} />",
+   "rendered": true
+  },
+  {
+   "lang": "vue",
+   "title": null,
+   "code": "<GenerativeUISurface id=\"featured\" :ui=\"shopUI\" :components=\"['ProductGrid', 'ProductCard']\" />",
+   "rendered": true
+  },
+  {
+   "lang": "tsx",
+   "title": null,
+   "code": "<GenerativeUISurface id=\"sidebar-notes\" autoScroll={false} />",
+   "rendered": true
+  },
+  {
+   "lang": "html",
+   "title": null,
+   "code": "<copilot-generative-ui-surface id=\"sidebar-notes\" [autoScroll]=\"false\" />",
+   "rendered": true
+  },
+  {
+   "lang": "tsx",
+   "title": null,
+   "code": "const scrollRef = useRef<ScrollView>(null);\nconst notesY = useRef<number | undefined>(undefined);\n// Until this time, a new position of the target scrolls to it again.\nconst followUntil = useRef(0);\n\nconst scrollToNotes = () => {\n  followUntil.current = Date.now() + 1000;\n  // Undefined before the first layout: onLayout scrolls then.\n  if (notesY.current !== undefined) {\n    scrollRef.current?.scrollTo({ y: notesY.current, animated: true });\n  }\n};\n\n<ScrollView ref={scrollRef}>\n  {/* ... */}\n  {/* A direct child of the ScrollView, so its layout y is its offset in the content. */}\n  <View\n    onLayout={(event) => {\n      const { y } = event.nativeEvent.layout;\n      if (y === notesY.current) return; // same position: nothing to correct\n      notesY.current = y;\n      if (Date.now() < followUntil.current) {\n        scrollRef.current?.scrollTo({ y, animated: true });\n      }\n    }}\n  >\n    <GenerativeUISurface id=\"sidebar-notes\" onGenerationStart={scrollToNotes} />\n  </View>\n</ScrollView>;",
+   "rendered": true
+  },
+  {
+   "lang": "vue",
+   "title": null,
+   "code": "<GenerativeUISurface id=\"sidebar-notes\" :auto-scroll=\"false\" />",
+   "rendered": true
+  },
+  {
+   "lang": "css",
+   "title": null,
+   "code": "[data-generative-ui-surface] {\n  scroll-margin-top: 6rem;\n}",
+   "rendered": true
+  },
+  {
+   "lang": "tsx",
+   "title": null,
+   "code": "<GenerativeUISurface\n  key={product.id}\n  id={`recommendations-${product.id}`}\n  description={`The \"You might also like\" row under ${product.name}. Show related products here. Never include ${product.name} itself.`}\n/>",
+   "rendered": true
+  },
+  {
+   "lang": "ts",
+   "title": null,
+   "code": "@Component({\n  selector: \"app-product-page\",\n  imports: [CopilotGenerativeUISurface],\n  template: `\n    <copilot-generative-ui-surface\n      [id]=\"'recommendations-' + product().id\"\n      [description]=\"recommendationsDescription(product())\"\n    />\n  `,\n})\nexport class ProductPage {\n  readonly product = input.required<Product>();\n\n  protected recommendationsDescription({ name }: Product) {\n    return `The \"You might also like\" row under ${name}. Show related products here. Never include ${name} itself.`;\n  }\n}",
+   "rendered": true
+  },
+  {
+   "lang": "tsx",
+   "title": null,
+   "code": "<GenerativeUISurface\n  key={product.id}\n  id={`recommendations-${product.id}`}\n  description={`The \"You might also like\" row under ${product.name}. Show related products here. Never include ${product.name} itself.`}\n/>",
+   "rendered": true
+  },
+  {
+   "lang": "vue",
+   "title": null,
+   "code": "<script setup lang=\"ts\">\nimport { computed } from \"vue\";\nimport { GenerativeUISurface } from \"@copilotkit/vue/v2/generative-ui\";\nimport type { Product } from \"../product\";\n\nconst props = defineProps<{ product: Product }>();\nconst description = computed(\n  () =>\n    `The \"You might also like\" row under ${props.product.name}. Show related products here. Never include ${props.product.name} itself.`,\n);\n</script>\n\n<template>\n  <GenerativeUISurface :id=\"`recommendations-${product.id}`\" :description=\"description\" />\n</template>",
+   "rendered": true
+  },
+  {
+   "lang": "tsx",
+   "title": null,
+   "code": "<CopilotKitProvider\n  runtimeUrl=\"/api/copilotkit\"\n  generativeUI={{\n    ui: shopUI,\n    errorBoundary: {\n      onError: (info) => console.warn(info.kind, info.surfaceId, info.error.message),\n      fallback: ({ retry }) => <button onClick={retry}>Try again</button>,\n    },\n  }}\n>",
+   "rendered": true
+  },
+  {
+   "lang": "ts",
+   "title": "src/app/app.config.ts",
+   "code": "provideGenerativeUI({\n  ui: shopUI,\n  onError: (info) => console.warn(info.kind, info.surfaceId, info.error.message),\n  // A component with the inputs `message` and `componentId`, and\n  // `retry` if it declares it.\n  errorFallback: MyFallback,\n});",
+   "rendered": true
+  },
+  {
+   "lang": "tsx",
+   "title": null,
+   "code": "<CopilotKitProvider runtimeUrl={runtimeUrl}>\n  <GenerativeUIProvider\n    ui={shopUI}\n    errorBoundary={{\n      onError: (info) => console.warn(info.kind, info.surfaceId, info.error.message),\n      fallback: ({ retry }) => (\n        <Pressable onPress={retry}>\n          <Text>Try again</Text>\n        </Pressable>\n      ),\n    }}\n  >",
+   "rendered": true
+  },
+  {
+   "lang": "vue",
+   "title": "src/components/RetryFallback.vue",
+   "code": "<script setup lang=\"ts\">\nimport type { GenerativeUIErrorFallbackProps } from \"@copilotkit/vue/v2/generative-ui\";\n\ndefineProps<GenerativeUIErrorFallbackProps>();\n</script>\n\n<template>\n  <button @click=\"retry\">Try again</button>\n</template>",
+   "rendered": true
+  },
+  {
+   "lang": "vue",
+   "title": null,
+   "code": "<script setup lang=\"ts\">\nimport { CopilotKitProvider } from \"@copilotkit/vue/v2\";\nimport type { GenerativeUIErrorInfo } from \"@copilotkit/vue/v2/generative-ui\";\nimport RetryFallback from \"./components/RetryFallback.vue\";\nimport { shopUI } from \"./shop-ui\";\n\nfunction onError(info: GenerativeUIErrorInfo) {\n  console.warn(info.kind, info.surfaceId, info.error.message);\n}\n</script>\n\n<template>\n  <CopilotKitProvider\n    runtime-url=\"/api/copilotkit\"\n    :generativeUI=\"{ ui: shopUI, errorBoundary: { onError, fallback: RetryFallback } }\"\n  >\n    <slot />\n  </CopilotKitProvider>\n</template>",
+   "rendered": true
+  }
+ ],
+ "ms-agent-harness-dotnet__generative-ui__components__theming": [
+  {
+   "lang": "tsx",
+   "title": null,
+   "code": "<CopilotKitProvider\n  runtimeUrl=\"/api/copilotkit\"\n  generativeUI={{\n    ui: standardUI,\n    theme: {\n      \"--a2ui-color-accent\": \"#d97706\",\n      \"--a2ui-font-family\": \"Inter, sans-serif\",\n      \"--a2ui-radius-md\": \"10px\",\n    },\n  }}\n>",
+   "rendered": true
+  },
+  {
+   "lang": "ts",
+   "title": "src/app/app.config.ts",
+   "code": "provideGenerativeUI({\n  ui: standardUI,\n  theme: {\n    \"--a2ui-color-accent\": \"#d97706\",\n    \"--a2ui-font-family\": \"Inter, sans-serif\",\n    \"--a2ui-radius-md\": \"10px\",\n  },\n}),",
+   "rendered": true
+  },
+  {
+   "lang": "vue",
+   "title": null,
+   "code": "<script setup lang=\"ts\">\nimport { CopilotKitProvider } from \"@copilotkit/vue/v2\";\nimport { standardUI, type GenerativeUITheme } from \"@copilotkit/vue/v2/generative-ui\";\n\nconst theme: GenerativeUITheme = {\n  \"--a2ui-color-accent\": \"#d97706\",\n  \"--a2ui-font-family\": \"Inter, sans-serif\",\n  \"--a2ui-radius-md\": \"10px\",\n};\n</script>\n\n<template>\n  <CopilotKitProvider runtime-url=\"/api/copilotkit\" :generativeUI=\"{ ui: standardUI, theme }\">\n    <slot />\n  </CopilotKitProvider>\n</template>",
+   "rendered": true
+  },
+  {
+   "lang": "ts",
+   "title": null,
+   "code": "import type { GenerativeUITheme } from \"@copilotkit/react-core/v2/generative-ui\";\n\nexport const theme: GenerativeUITheme = { \"--a2ui-color-accent\": \"#d97706\" };",
+   "rendered": true
+  },
+  {
+   "lang": "ts",
+   "title": null,
+   "code": "import type { GenerativeUITheme } from \"@copilotkit/angular/generative-ui\";\n\nexport const theme: GenerativeUITheme = { \"--a2ui-color-accent\": \"#d97706\" };",
+   "rendered": true
+  },
+  {
+   "lang": "ts",
+   "title": null,
+   "code": "import type { GenerativeUITheme } from \"@copilotkit/vue/v2/generative-ui\";\n\nexport const theme: GenerativeUITheme = { \"--a2ui-color-accent\": \"#d97706\" };",
+   "rendered": true
+  },
+  {
+   "lang": "html",
+   "title": null,
+   "code": "<html class=\"dark\">",
+   "rendered": true
+  },
+  {
+   "lang": "tsx",
+   "title": null,
+   "code": "const colorSchemeScript = `(() => {\n  const media = matchMedia(\"(prefers-color-scheme: dark)\");\n  const apply = () => document.documentElement.classList.toggle(\"dark\", media.matches);\n  apply();\n  media.addEventListener(\"change\", apply);\n})();`;\n\n<head>\n  <script dangerouslySetInnerHTML={{ __html: colorSchemeScript }} />\n</head>;",
+   "rendered": true
+  },
+  {
+   "lang": "html",
+   "title": "src/index.html",
+   "code": "<head>\n  <script>\n    (() => {\n      const media = matchMedia(\"(prefers-color-scheme: dark)\");\n      const apply = () => document.documentElement.classList.toggle(\"dark\", media.matches);\n      apply();\n      media.addEventListener(\"change\", apply);\n    })();\n  </script>\n</head>",
+   "rendered": true
+  },
+  {
+   "lang": "html",
+   "title": "index.html",
+   "code": "<head>\n  <script>\n    (() => {\n      const media = matchMedia(\"(prefers-color-scheme: dark)\");\n      const apply = () => document.documentElement.classList.toggle(\"dark\", media.matches);\n      apply();\n      media.addEventListener(\"change\", apply);\n    })();\n  </script>\n</head>",
+   "rendered": true
+  },
+  {
+   "lang": "tsx",
+   "title": null,
+   "code": "theme: {\n  \"--a2ui-color-accent\": \"#d97706\",\n  dark: {\n    \"--a2ui-color-panel\": \"#1f2937\",\n    \"--a2ui-color-surface\": \"#111827\",\n  },\n},",
+   "rendered": true
+  },
+  {
+   "lang": "tsx",
+   "title": null,
+   "code": "theme: {\n  mapStyle: \"https://tiles.example.com/light.json\",\n  dark: { mapStyle: \"https://tiles.example.com/dark.json\" },\n},",
+   "rendered": true
+  },
+  {
+   "lang": "css",
+   "title": null,
+   "code": ".a2ui-surface {\n  --a2ui-color-accent: #d97706;\n}",
+   "rendered": true
+  }
+ ],
+ "ms-agent-harness-dotnet__generative-ui__components__transports": [
+  {
+   "lang": "tsx",
+   "title": null,
+   "code": "<CopilotKitProvider runtimeUrl=\"/api/copilotkit\" generativeUI={{ ui: standardUI }}>",
+   "rendered": true
+  },
+  {
+   "lang": "ts",
+   "title": null,
+   "code": "provideGenerativeUI({ ui: standardUI }),",
+   "rendered": true
+  },
+  {
+   "lang": "tsx",
+   "title": null,
+   "code": "<GenerativeUIProvider ui={shopUI}>",
+   "rendered": true
+  },
+  {
+   "lang": "vue",
+   "title": null,
+   "code": "<CopilotKitProvider runtime-url=\"/api/copilotkit\" :generativeUI=\"{ ui: standardUI }\">",
+   "rendered": true
+  },
+  {
+   "lang": "ts",
+   "title": "app/api/copilotkit/route.ts",
+   "code": "const runtime = new CopilotRuntime({\n  agents: { default: agent },\n  generativeUI: true,\n});",
+   "rendered": true
+  },
+  {
+   "lang": "tsx",
+   "title": null,
+   "code": "<CopilotKitProvider runtimeUrl=\"/api/copilotkit\" generativeUI={{ ui: standardUI, transport: \"markdown\" }}>",
+   "rendered": true
+  },
+  {
+   "lang": "ts",
+   "title": null,
+   "code": "provideGenerativeUI({ ui: standardUI, transport: \"markdown\" }),",
+   "rendered": true
+  },
+  {
+   "lang": "vue",
+   "title": null,
+   "code": "<CopilotKitProvider runtime-url=\"/api/copilotkit\" :generativeUI=\"{ ui: standardUI, transport: 'markdown' }\">",
+   "rendered": true
+  },
+  {
+   "lang": "tsx",
+   "title": null,
+   "code": "<CopilotKitProvider\n  runtimeUrl=\"/api/copilotkit\"\n  generativeUI={{ ui: standardUI, agentIds: [\"shop\"] }}\n>",
+   "rendered": true
+  },
+  {
+   "lang": "ts",
+   "title": null,
+   "code": "provideGenerativeUI({ ui: standardUI, agentIds: [\"shop\"] }),",
+   "rendered": true
+  },
+  {
+   "lang": "tsx",
+   "title": null,
+   "code": "<GenerativeUIProvider ui={shopUI} agentIds={[\"shop\"]}>",
+   "rendered": true
+  },
+  {
+   "lang": "vue",
+   "title": null,
+   "code": "<CopilotKitProvider\n  runtime-url=\"/api/copilotkit\"\n  :generativeUI=\"{ ui: standardUI, agentIds: ['shop'] }\"\n>",
+   "rendered": true
+  }
+ ],
+ "index": [
+  {
+   "lang": "bash",
+   "title": null,
+   "code": "npm create vue@latest my-copilot-app\ncd my-copilot-app\nnpm install",
+   "rendered": true
+  },
+  {
+   "lang": "bash",
+   "title": null,
+   "code": "npm install @copilotkit/vue @copilotkit/runtime\nnpm install -D tsx typescript @types/node",
+   "rendered": true
+  },
+  {
+   "lang": "bash",
+   "title": null,
+   "code": "pnpm add @copilotkit/vue @copilotkit/runtime\npnpm add -D tsx typescript @types/node",
+   "rendered": true
+  },
+  {
+   "lang": "bash",
+   "title": null,
+   "code": "yarn add @copilotkit/vue @copilotkit/runtime\nyarn add -D tsx typescript @types/node",
+   "rendered": true
+  },
+  {
+   "lang": "ts",
+   "title": "server.ts",
+   "code": "import { createServer } from \"node:http\";\nimport { BuiltInAgent, CopilotRuntime } from \"@copilotkit/runtime/v2\";\nimport { createCopilotNodeListener } from \"@copilotkit/runtime/v2/node\";\n\nconst runtime = new CopilotRuntime({\n  agents: {\n    default: new BuiltInAgent({\n      model: \"openai:gpt-6-luna\",\n      prompt: \"You are a helpful assistant for a Vue app.\",\n    }),\n  },\n});\n\nconst port = Number(process.env.PORT ?? 8200);\n\ncreateServer(\n  createCopilotNodeListener({\n    runtime,\n    basePath: \"/api/copilotkit\",\n    cors: true,\n  }),\n).listen(port, () => {\n  console.log(\n    `Copilot Runtime listening at http://localhost:${port}/api/copilotkit`,\n  );\n});",
+   "rendered": true
+  },
+  {
+   "lang": "ts",
+   "title": "src/main.ts",
+   "code": "import { createApp } from \"vue\";\nimport App from \"./App.vue\";\nimport \"@copilotkit/vue/styles.css\";\n\ncreateApp(App).mount(\"#app\");",
+   "rendered": true
+  },
+  {
+   "lang": "vue",
+   "title": "src/App.vue",
+   "code": "<script setup lang=\"ts\">\nimport { CopilotKitProvider, CopilotChat } from \"@copilotkit/vue/v2\";\n</script>\n\n<template>\n  <CopilotKitProvider\n    runtime-url=\"http://localhost:8200/api/copilotkit\"\n  >\n    <div style=\"height: 100vh\">\n      <CopilotChat />\n    </div>\n  </CopilotKitProvider>\n</template>",
+   "rendered": true
+  },
+  {
+   "lang": "bash",
+   "title": null,
+   "code": "export OPENAI_API_KEY=sk-...\nnpx tsx server.ts",
+   "rendered": true
+  },
+  {
+   "lang": "bash",
+   "title": null,
+   "code": "npm run dev",
+   "rendered": true
+  },
+  {
+   "lang": "ts",
+   "title": "landing: rendered block 0",
+   "code": "import {\n  CopilotRuntime,\n  createCopilotRuntimeHandler,\n} from \"@copilotkit/runtime/v2\";\nimport { HttpAgent } from \"@ag-ui/client\";\n\nconst runtime = new CopilotRuntime({\n  agents: {\n    my_agent: new HttpAgent({ url: process.env.AGENT_URL! }),\n  },\n});\n\nconst handler = createCopilotRuntimeHandler({\n  runtime,\n  basePath: \"/api/copilotkit\",\n});\n\nexport const GET = handler;\nexport const POST = handler;\n",
+   "rendered": true
+  }
+ ],
+ "custom-look-and-feel__headless-ui": [
+  {
+   "lang": "vue",
+   "title": "HeadlessChat.vue",
+   "code": "<script setup lang=\"ts\">\nimport { computed, ref } from \"vue\";\nimport { useAgent, useCopilotKit } from \"@copilotkit/vue/v2\";\n\nconst { agent } = useAgent({ agentId: \"my-agent\" });\nconst { copilotkit } = useCopilotKit();\nconst input = ref(\"\");\nconst messages = computed(() => agent.value?.messages ?? []);\nconst isRunning = computed(() => agent.value?.isRunning ?? false);\n\nasync function submit() {\n  const current = agent.value;\n  const content = input.value.trim();\n  if (!current || !content || isRunning.value) return;\n\n  current.addMessage({\n    id: crypto.randomUUID(),\n    role: \"user\",\n    content,\n  });\n  input.value = \"\";\n  await copilotkit.value.runAgent({ agent: current });\n}\n</script>\n\n<template>\n  <section aria-live=\"polite\">\n    <article v-for=\"message in messages\" :key=\"message.id\" :data-role=\"message.role\">\n      {{ message.content }}\n    </article>\n    <p v-if=\"isRunning\">Thinking\u2026</p>\n    <form @submit.prevent=\"submit\">\n      <input v-model=\"input\" aria-label=\"Message\" />\n      <button type=\"submit\" :disabled=\"isRunning\">Send</button>\n    </form>\n  </section>\n</template>",
+   "rendered": true
+  },
+  {
+   "lang": "vue",
+   "title": null,
+   "code": "<CopilotKitProvider runtime-url=\"/api/copilotkit\">\n  <CopilotChatConfigurationProvider agent-id=\"my-agent\">\n    <HeadlessChat />\n  </CopilotChatConfigurationProvider>\n</CopilotKitProvider>",
+   "rendered": true
+  },
+  {
+   "lang": "vue",
+   "title": "RenderedMessages.vue",
+   "code": "<script setup lang=\"ts\">\nimport { computed } from \"vue\";\nimport {\n  CopilotChatAssistantMessage,\n  CopilotChatMessageView,\n  CopilotChatUserMessage,\n  useAgent,\n} from \"@copilotkit/vue/v2\";\n\nconst { agent } = useAgent({ agentId: \"my-agent\" });\nconst messages = computed(() => agent.value?.messages ?? []);\nconst isRunning = computed(() => agent.value?.isRunning ?? false);\n</script>\n\n<template>\n  <CopilotChatMessageView :messages=\"messages\" :is-running=\"isRunning\">\n    <template #assistant-message=\"assistantProps\">\n      <article class=\"assistant-bubble\">\n        <CopilotChatAssistantMessage v-bind=\"assistantProps\" />\n      </article>\n    </template>\n    <template #user-message=\"userProps\">\n      <article class=\"user-bubble\">\n        <CopilotChatUserMessage v-bind=\"userProps\" />\n      </article>\n    </template>\n  </CopilotChatMessageView>\n</template>",
+   "rendered": true
+  }
+ ],
+ "custom-look-and-feel__slots": [
+  {
+   "lang": "vue",
+   "title": "SupportChat.vue",
+   "code": "<script setup lang=\"ts\">\nimport { CopilotChat } from \"@copilotkit/vue/v2\";\n</script>\n\n<template>\n  <CopilotChat>\n    <template #welcome-screen=\"{ onSubmitMessage }\">\n      <section class=\"welcome-card\">\n        <h2>How can we help?</h2>\n        <button type=\"button\" @click=\"onSubmitMessage('Show my open tickets')\">\n          Show my open tickets\n        </button>\n      </section>\n    </template>\n  </CopilotChat>\n</template>",
+   "rendered": true
+  },
+  {
+   "lang": "vue",
+   "title": "SupportChat.vue",
+   "code": "<script setup lang=\"ts\">\nimport {\n  CopilotChat,\n  CopilotChatAssistantMessage,\n  CopilotChatMessageView,\n} from \"@copilotkit/vue/v2\";\n</script>\n\n<template>\n  <CopilotChat>\n    <template #message-view=\"{ messages, isRunning }\">\n      <CopilotChatMessageView :messages=\"messages\" :is-running=\"isRunning\">\n        <template #assistant-message=\"{ message, messages: allMessages, isRunning: running }\">\n          <CopilotChatAssistantMessage\n            :message=\"message\"\n            :messages=\"allMessages\"\n            :is-running=\"running\"\n          >\n            <template #toolbar-items>\n              <span class=\"reviewed-badge\">Reviewed</span>\n            </template>\n          </CopilotChatAssistantMessage>\n        </template>\n      </CopilotChatMessageView>\n    </template>\n  </CopilotChat>\n</template>",
+   "rendered": true
+  },
+  {
+   "lang": "vue",
+   "title": null,
+   "code": "<CopilotChat>\n  <template #input=\"inputProps\">\n    <CopilotChatInput v-bind=\"inputProps\">\n      <template #disclaimer>\n        <p class=\"support-disclaimer\">Responses may be inaccurate.</p>\n      </template>\n    </CopilotChatInput>\n  </template>\n</CopilotChat>",
+   "rendered": true
+  },
+  {
+   "lang": "vue",
+   "title": null,
+   "code": "<CopilotChat>\n  <template #message-view=\"{ messages, isRunning }\">\n    <CopilotChatMessageView\n      class=\"rounded-xl bg-gray-50 p-4 dark:bg-gray-900\"\n      :messages=\"messages\"\n      :is-running=\"isRunning\"\n    />\n  </template>\n</CopilotChat>",
+   "rendered": true
+  },
+  {
+   "lang": "vue",
+   "title": null,
+   "code": "<CopilotChat>\n  <template #message-view=\"slotProps\">\n    <CopilotChatMessageView\n      v-bind=\"slotProps\"\n      class=\"my-custom-messages\"\n      data-testid=\"message-view\"\n    />\n  </template>\n</CopilotChat>",
+   "rendered": true
+  },
+  {
+   "lang": "vue",
+   "title": null,
+   "code": "<CopilotChat>\n  <template #message-view=\"{ messages, isRunning }\">\n    <CustomMessageView :messages=\"messages\" :is-running=\"isRunning\" />\n  </template>\n</CopilotChat>",
+   "rendered": true
+  },
+  {
+   "lang": "vue",
+   "title": null,
+   "code": "<CopilotChat>\n  <template #message-view=\"{ messages, isRunning }\">\n    <CopilotChatMessageView :messages=\"messages\" :is-running=\"isRunning\">\n      <template #assistant-message=\"assistantProps\">\n        <CopilotChatAssistantMessage v-bind=\"assistantProps\">\n          <template #toolbar-items>\n            <CustomToolbarAction />\n          </template>\n        </CopilotChatAssistantMessage>\n      </template>\n    </CopilotChatMessageView>\n  </template>\n</CopilotChat>",
+   "rendered": true
+  },
+  {
+   "lang": "vue",
+   "title": null,
+   "code": "<CopilotChatAssistantMessage v-bind=\"assistantProps\">\n  <template #copy-button=\"{ onCopy }\">\n    <button type=\"button\" @click=\"onCopy\">Copy response</button>\n  </template>\n</CopilotChatAssistantMessage>",
+   "rendered": true
+  },
+  {
+   "lang": "vue",
+   "title": null,
+   "code": "<CopilotChat\n  :labels=\"{\n    chatInputPlaceholder: 'Ask your agent anything\u2026',\n    welcomeMessageText: 'How can I help you today?',\n    chatDisclaimerText: 'AI responses may be inaccurate.',\n  }\"\n/>",
+   "rendered": true
+  }
+ ],
+ "frontend-tools": [
+  {
+   "lang": "vue",
+   "title": "src/components/DashboardAgent.vue",
+   "code": "<script setup lang=\"ts\">\nimport { ref } from \"vue\";\nimport { z } from \"zod\";\nimport { CopilotChat, useFrontendTool } from \"@copilotkit/vue/v2\";\n\nconst severity = ref(\"all\");\n\nuseFrontendTool(\n  {\n    name: \"filter_incidents\",\n    description: \"Filter the visible incident list by severity.\",\n    parameters: z.object({\n      severity: z.enum([\"all\", \"sev1\", \"sev2\", \"sev3\"]),\n    }),\n    handler: async ({ severity: nextSeverity }) => {\n      severity.value = nextSeverity;\n      return { applied: true, severity: nextSeverity };\n    },\n  },\n  [severity],\n);\n</script>\n\n<template>\n  <p>Current filter: {{ severity }}</p>\n  <CopilotChat />\n</template>",
+   "rendered": true
+  },
+  {
+   "lang": "vue",
+   "title": "src/App.vue",
+   "code": "<script setup lang=\"ts\">\nimport { CopilotKitProvider } from \"@copilotkit/vue/v2\";\nimport DashboardAgent from \"./components/DashboardAgent.vue\";\n</script>\n\n<template>\n  <CopilotKitProvider runtime-url=\"/api/copilotkit\">\n    <DashboardAgent />\n  </CopilotKitProvider>\n</template>",
+   "rendered": true
+  }
+ ],
+ "generative-ui__mcp-apps": [
+  {
+   "lang": "ts",
+   "title": "server.ts",
+   "code": "import { CopilotRuntime } from \"@copilotkit/runtime/v2\";\n\nconst runtime = new CopilotRuntime({\n  agents: { default: agent },\n  mcpApps: {\n    servers: [\n      {\n        type: \"http\",\n        url: \"https://mcp.example.com/mcp\",\n        serverId: \"support-tools\",\n      },\n    ],\n  },\n});",
+   "rendered": true
+  },
+  {
+   "lang": "vue",
+   "title": "src/App.vue",
+   "code": "<script setup lang=\"ts\">\nimport { CopilotChat, CopilotKitProvider } from \"@copilotkit/vue/v2\";\n</script>\n\n<template>\n  <CopilotKitProvider runtime-url=\"/api/copilotkit\">\n    <main style=\"height: 100dvh\"><CopilotChat /></main>\n  </CopilotKitProvider>\n</template>",
+   "rendered": true
+  },
+  {
+   "lang": "vue",
+   "title": "Trusted widget configuration",
+   "code": "<script setup lang=\"ts\">\nimport { CopilotChat, CopilotKitProvider } from \"@copilotkit/vue/v2\";\n</script>\n\n<template>\n  <CopilotKitProvider\n    runtime-url=\"/api/copilotkit\"\n    :mcp-apps=\"{ allowSameOriginFallback: true }\"\n  >\n    <CopilotChat />\n  </CopilotKitProvider>\n</template>",
+   "rendered": true
+  },
+  {
+   "lang": "typescript",
+   "title": null,
+   "code": "{\n  type: \"http\",\n  url: \"http://localhost:3101/mcp\",\n  serverId: \"my-http-server\"\n}",
+   "rendered": true
+  },
+  {
+   "lang": "typescript",
+   "title": null,
+   "code": "{\n  type: \"sse\",\n  url: \"https://mcp.example.com/sse\",\n  headers: {\n    \"Authorization\": \"Bearer token\"\n  },\n  serverId: \"my-sse-server\"\n}",
+   "rendered": true
+  }
+ ],
+ "generative-ui__state-rendering": [
+  {
+   "lang": "vue",
+   "title": "src/components/ResearchProgress.vue",
+   "code": "<script setup lang=\"ts\">\nimport { computed } from \"vue\";\nimport { useAgent, UseAgentUpdate } from \"@copilotkit/vue/v2\";\n\ntype ResearchState = { status?: string; draft?: string; completed?: number; total?: number };\n\nconst { agent } = useAgent({\n  agentId: \"researcher\",\n  updates: [UseAgentUpdate.OnStateChanged, UseAgentUpdate.OnRunStatusChanged],\n});\n\nconst state = computed(() => (agent.value?.state ?? {}) as ResearchState);\n</script>\n\n<template>\n  <section aria-live=\"polite\">\n    <p>{{ state.status ?? \"Idle\" }}</p>\n    <progress :value=\"state.completed ?? 0\" :max=\"state.total ?? 1\" />\n    <article v-if=\"state.draft\">{{ state.draft }}</article>\n  </section>\n</template>",
+   "rendered": true
+  },
+  {
+   "lang": "vue",
+   "title": "src/App.vue",
+   "code": "<script setup lang=\"ts\">\nimport { CopilotChat, CopilotKitProvider } from \"@copilotkit/vue/v2\";\nimport ResearchProgress from \"./components/ResearchProgress.vue\";\n</script>\n\n<template>\n  <CopilotKitProvider runtime-url=\"/api/copilotkit\">\n    <ResearchProgress />\n    <CopilotChat agent-id=\"researcher\" />\n  </CopilotKitProvider>\n</template>",
+   "rendered": true
+  }
+ ],
+ "generative-ui__tool-based": [
+  {
+   "lang": "vue",
+   "title": "src/components/WeatherCard.vue",
+   "code": "<script setup lang=\"ts\">\ndefineProps<{ city: string; temperature: number; condition: string }>();\n</script>\n\n<template>\n  <article>\n    <strong>{{ city }}</strong>\n    <p>{{ temperature }}\u00b0 \u00b7 {{ condition }}</p>\n  </article>\n</template>",
+   "rendered": true
+  },
+  {
+   "lang": "vue",
+   "title": "src/components/AgentExperience.vue",
+   "code": "<script setup lang=\"ts\">\nimport { z } from \"zod\";\nimport { CopilotChat, useComponent } from \"@copilotkit/vue/v2\";\nimport WeatherCard from \"./WeatherCard.vue\";\n\nuseComponent({\n  name: \"show_weather\",\n  description: \"Display the weather for one city.\",\n  parameters: z.object({\n    city: z.string(),\n    temperature: z.number(),\n    condition: z.string(),\n  }),\n  render: WeatherCard,\n});\n</script>\n\n<template><CopilotChat /></template>",
+   "rendered": true
+  },
+  {
+   "lang": "vue",
+   "title": "src/App.vue",
+   "code": "<script setup lang=\"ts\">\nimport { CopilotKitProvider } from \"@copilotkit/vue/v2\";\nimport AgentExperience from \"./components/AgentExperience.vue\";\n</script>\n\n<template>\n  <CopilotKitProvider runtime-url=\"/api/copilotkit\">\n    <AgentExperience />\n  </CopilotKitProvider>\n</template>",
+   "rendered": true
+  }
+ ],
+ "generative-ui__tool-rendering": [
+  {
+   "lang": "vue",
+   "title": "src/components/AgentExperience.vue",
+   "code": "<script setup lang=\"ts\">\nimport { CopilotChat, useDefaultRenderTool } from \"@copilotkit/vue/v2\";\n\nuseDefaultRenderTool();\n</script>\n\n<template><CopilotChat /></template>",
+   "rendered": true
+  },
+  {
+   "lang": "ts",
+   "title": "src/components/AgentExperience.vue",
+   "code": "useDefaultRenderTool({ render: BrandedToolCard });",
+   "rendered": true
+  },
+  {
+   "lang": "vue",
+   "title": "src/components/WeatherToolCard.vue",
+   "code": "<script setup lang=\"ts\">\ndefineProps<{\n  parameters: { city?: string };\n  status: \"inProgress\" | \"executing\" | \"complete\";\n  result?: string;\n}>();\n</script>\n\n<template>\n  <p v-if=\"status !== 'complete'\">Checking {{ parameters.city ?? \"\u2026\" }}</p>\n  <article v-else>\n    <strong>{{ parameters.city }}</strong>\n    <pre>{{ result }}</pre>\n  </article>\n</template>",
+   "rendered": true
+  },
+  {
+   "lang": "vue",
+   "title": "src/components/AgentExperience.vue",
+   "code": "<script setup lang=\"ts\">\nimport { z } from \"zod\";\nimport { CopilotChat, useDefaultRenderTool, useRenderTool } from \"@copilotkit/vue/v2\";\nimport WeatherToolCard from \"./WeatherToolCard.vue\";\n\nuseRenderTool({\n  name: \"get_weather\",\n  parameters: z.object({ city: z.string() }),\n  render: WeatherToolCard,\n});\n\nuseDefaultRenderTool(); // wildcard fallback for every other tool\n</script>\n\n<template><CopilotChat /></template>",
+   "rendered": true
+  },
+  {
+   "lang": "ts",
+   "title": null,
+   "code": "useRenderTool({ name: \"get_weather\", parameters, render: WeatherToolCard }, [locale]);",
+   "rendered": true
+  },
+  {
+   "lang": "vue",
+   "title": "src/App.vue",
+   "code": "<script setup lang=\"ts\">\nimport { CopilotKitProvider } from \"@copilotkit/vue/v2\";\nimport AgentExperience from \"./components/AgentExperience.vue\";\n</script>\n\n<template>\n  <CopilotKitProvider runtime-url=\"/api/copilotkit\"><AgentExperience /></CopilotKitProvider>\n</template>",
+   "rendered": true
+  }
+ ],
+ "headless-threads": [
+  {
+   "lang": "typescript",
+   "title": "server.ts",
+   "code": "import {\n  CopilotKitIntelligence,\n  CopilotRuntime,\n} from \"@copilotkit/runtime/v2\";\n\nconst runtime = new CopilotRuntime({\n  agents: { default: agent },\n  intelligence: new CopilotKitIntelligence({\n    apiKey: process.env.CPK_INTELLIGENCE_API_KEY!,\n  }),\n  identifyUser: async (request) => {\n    const session = await verifyAppSession(request);\n    if (!session?.user) throw new Error(\"Unauthorized\");\n    return { id: session.user.id, name: session.user.name };\n  },\n  // generateThreadNames: false,\n  // lockTtlSeconds: 20,\n  // lockHeartbeatIntervalSeconds: 15,\n  // lockKeyPrefix: \"my-app\",\n});",
+   "rendered": true
+  },
+  {
+   "lang": "vue",
+   "title": "src/components/ThreadSidebar.vue",
+   "code": "<script setup lang=\"ts\">\nimport {\n  useCopilotChatConfiguration,\n  useThreads,\n} from \"@copilotkit/vue/v2\";\n\nconst config = useCopilotChatConfiguration();\nconst {\n  threads,\n  isLoading,\n  renameThread,\n  archiveThread,\n  deleteThread,\n} = useThreads({ agentId: \"my-agent\" });\n</script>\n\n<template>\n  <p v-if=\"isLoading\">Loading\u2026</p>\n  <ul v-else>\n    <li v-for=\"thread in threads\" :key=\"thread.id\">\n      <button\n        @click=\"config?.setActiveThreadId(thread.id, { explicit: true })\"\n      >\n        {{ thread.name ?? \"New conversation\" }}\n      </button>\n      <button @click=\"renameThread(thread.id, 'Renamed')\">Rename</button>\n      <button @click=\"archiveThread(thread.id)\">Archive</button>\n      <button @click=\"deleteThread(thread.id)\">Delete</button>\n    </li>\n  </ul>\n</template>",
+   "rendered": true
+  },
+  {
+   "lang": "vue",
+   "title": "src/App.vue",
+   "code": "<script setup lang=\"ts\">\nimport {\n  CopilotChat,\n  CopilotChatConfigurationProvider,\n  CopilotKitProvider,\n} from \"@copilotkit/vue/v2\";\nimport ThreadSidebar from \"./components/ThreadSidebar.vue\";\n</script>\n\n<template>\n  <CopilotKitProvider runtime-url=\"/api/copilotkit\">\n    <CopilotChatConfigurationProvider agent-id=\"my-agent\">\n      <div class=\"flex\" style=\"height: 100dvh\">\n        <ThreadSidebar />\n        <CopilotChat />\n      </div>\n    </CopilotChatConfigurationProvider>\n  </CopilotKitProvider>\n</template>",
+   "rendered": true
+  },
+  {
+   "lang": "vue",
+   "title": null,
+   "code": "<script setup lang=\"ts\">\nconst {\n  threads,\n  hasMoreThreads,\n  isFetchingMoreThreads,\n  fetchMoreThreads,\n} = useThreads({ agentId: \"my-agent\", limit: 20 });\n</script>\n\n<template>\n  <button\n    v-if=\"hasMoreThreads\"\n    :disabled=\"isFetchingMoreThreads\"\n    @click=\"fetchMoreThreads\"\n  >\n    {{ isFetchingMoreThreads ? \"Loading\u2026\" : \"Load more\" }}\n  </button>\n</template>",
+   "rendered": true
+  }
+ ],
+ "human-in-the-loop": [
+  {
+   "lang": "vue",
+   "title": "src/components/MeetingApproval.vue",
+   "code": "<script setup lang=\"ts\">\nimport { z } from \"zod\";\nimport { useHumanInTheLoop } from \"@copilotkit/vue/v2\";\nimport TimePickerCard from \"./TimePickerCard.vue\";\n\nuseHumanInTheLoop({\n  name: \"schedule_meeting\",\n  description: \"Ask the user to select a meeting time.\",\n  parameters: z.object({\n    topic: z.string(),\n    attendee: z.string(),\n  }),\n  render: TimePickerCard,\n});\n</script>\n\n<template><p>Meeting approval tool registered.</p></template>",
+   "rendered": true
+  }
+ ],
+ "human-in-the-loop__governed-actions": [
+  {
+   "lang": "ts",
+   "title": null,
+   "code": "type GovernedAction = {\n  id: string;\n  summary: string;\n  tool: string;\n  reference: string;\n  verdict: \"allow\" | \"deny\" | \"require_approval\";\n  arguments: Record<string, unknown>;\n};",
+   "rendered": true
+  },
+  {
+   "lang": "vue",
+   "title": "src/components/GovernedActionApproval.vue",
+   "code": "<script setup lang=\"ts\">\nimport { computed, watchEffect } from \"vue\";\nimport { useInterrupt } from \"@copilotkit/vue/v2\";\n\ntype GovernedAction = {\n  id: string;\n  summary: string;\n  tool: string;\n  reference: string;\n  verdict: \"allow\" | \"deny\" | \"require_approval\";\n  arguments: Record<string, unknown>;\n};\n\nconst { slotProps } = useInterrupt({ renderInChat: false });\nconst action = computed(\n  () => slotProps.value?.interrupt?.metadata?.action as\n    | GovernedAction\n    | undefined,\n);\n\nasync function approve(approved: boolean) {\n  const current = action.value;\n  if (!current || !slotProps.value) return;\n\n  await slotProps.value.resolve({\n    approved,\n    actionId: current.id,\n    reference: current.reference,\n  });\n}\n\nwatchEffect(() => {\n  if (action.value?.verdict === \"allow\") void approve(true);\n  if (action.value?.verdict === \"deny\") void slotProps.value?.cancel();\n});\n</script>\n\n<template>\n  <section v-if=\"action\" class=\"rounded-lg border p-4 shadow-sm\">\n    <p>\n      {{\n        action.verdict === \"allow\"\n          ? \"Allowed by policy\"\n          : action.verdict === \"deny\"\n            ? \"Blocked by policy\"\n            : \"User approval required\"\n      }}\n    </p>\n    <h3>{{ action.summary }}</h3>\n    <p>Tool: {{ action.tool }}</p>\n    <p>Reference: {{ action.reference }}</p>\n    <pre>{{ JSON.stringify(action.arguments, null, 2) }}</pre>\n    <div v-if=\"action.verdict === 'require_approval'\">\n      <button @click=\"approve(true)\">Approve and run</button>\n      <button @click=\"approve(false)\">Reject</button>\n    </div>\n  </section>\n</template>",
+   "rendered": true
+  },
+  {
+   "lang": "ts",
+   "title": null,
+   "code": "type ApprovalResponse = {\n  approved: boolean;\n  actionId: string;\n  reference: string;\n};\n\nasync function handleApproval(\n  action: GovernedAction,\n  response: ApprovalResponse,\n) {\n  if (\n    response.approved &&\n    response.actionId === action.id &&\n    response.reference === action.reference\n  ) {\n    return executeSideEffect(action.tool, action.arguments);\n  }\n\n  return {\n    skipped: true,\n    reason: \"The user did not approve this action.\",\n  };\n}",
+   "rendered": true
+  },
+  {
+   "lang": "vue",
+   "title": "src/components/GovernedActionTool.vue",
+   "code": "<script setup lang=\"ts\">\nimport { z } from \"zod\";\nimport { useHumanInTheLoop } from \"@copilotkit/vue/v2\";\nimport GovernedActionCard from \"./GovernedActionCard.vue\";\n\nconst governedActionSchema = z.object({\n  id: z.string(),\n  summary: z.string(),\n  tool: z.string(),\n  reference: z.string(),\n  verdict: z.enum([\"allow\", \"deny\", \"require_approval\"]),\n  arguments: z.record(z.unknown()),\n});\n\nuseHumanInTheLoop({\n  name: \"approve_governed_action\",\n  description:\n    \"Ask the user to approve a governed side-effect action before it runs.\",\n  parameters: governedActionSchema,\n  render: GovernedActionCard,\n});\n</script>\n\n<template><p>Governed action tool registered.</p></template>",
+   "rendered": true
+  },
+  {
+   "lang": "vue",
+   "title": "src/components/GovernedActionCard.vue",
+   "code": "<script setup lang=\"ts\">\nimport { computed, ref, watchEffect } from \"vue\";\n\nconst props = defineProps<{\n  args: {\n    id?: string;\n    summary?: string;\n    reference?: string;\n    verdict?: \"allow\" | \"deny\" | \"require_approval\";\n  };\n  respond?: (result: unknown) => Promise<void>;\n}>();\n\nconst submitted = ref(false);\nconst ready = computed(() =>\n  Boolean(props.respond && props.args.id && props.args.reference && props.args.verdict),\n);\n\nfunction submitDecision(approved: boolean) {\n  if (!ready.value || submitted.value || !props.respond) return;\n  if (approved && props.args.verdict === \"deny\") return;\n  submitted.value = true;\n  void props.respond({\n    approved,\n    actionId: props.args.id,\n    reference: props.args.reference,\n  });\n}\n\nwatchEffect(() => {\n  if (props.args.verdict === \"allow\") submitDecision(true);\n  if (props.args.verdict === \"deny\") submitDecision(false);\n});\n</script>\n\n<template>\n  <section>\n    <p v-if=\"props.args.verdict === 'allow'\">Allowed by policy</p>\n    <p v-else-if=\"props.args.verdict === 'deny'\">Blocked by policy</p>\n    <p>{{ props.args.summary ?? \"Preparing approval\u2026\" }}</p>\n    <div v-if=\"ready && !submitted && props.args.verdict === 'require_approval'\">\n      <button @click=\"submitDecision(true)\">Approve and run</button>\n      <button @click=\"submitDecision(false)\">Reject</button>\n    </div>\n  </section>\n</template>",
+   "rendered": true
+  },
+  {
+   "lang": "vue",
+   "title": "src/App.vue",
+   "code": "<script setup lang=\"ts\">\nimport { CopilotChat, CopilotKitProvider } from \"@copilotkit/vue/v2\";\nimport GovernedActionApproval from \"./components/GovernedActionApproval.vue\";\nimport GovernedActionTool from \"./components/GovernedActionTool.vue\";\n</script>\n\n<template>\n  <CopilotKitProvider runtime-url=\"/api/copilotkit\">\n    <GovernedActionApproval />\n    <GovernedActionTool />\n    <CopilotChat />\n  </CopilotKitProvider>\n</template>",
+   "rendered": true
+  }
+ ],
+ "human-in-the-loop__headless": [
+  {
+   "lang": "vue",
+   "title": "src/App.vue",
+   "code": "<script setup lang=\"ts\">\nimport { CopilotKitProvider } from \"@copilotkit/vue/v2\";\nimport HeadlessInterruptPanel from \"./components/HeadlessInterruptPanel.vue\";\n</script>\n\n<template>\n  <CopilotKitProvider runtime-url=\"/api/copilotkit\">\n    <HeadlessInterruptPanel />\n  </CopilotKitProvider>\n</template>",
+   "rendered": true
+  }
+ ],
+ "human-in-the-loop__useInterrupt": [
+  {
+   "lang": "text",
+   "title": null,
+   "code": "outcome.type === \"interrupt\"\noutcome.interrupts  // Interrupt[]",
+   "rendered": true
+  },
+  {
+   "lang": "vue",
+   "title": "src/components/ApprovalPanel.vue",
+   "code": "<script setup lang=\"ts\">\nimport { useInterrupt } from \"@copilotkit/vue/v2\";\n\nconst { slotProps } = useInterrupt({ renderInChat: false });\n</script>\n\n<template>\n  <section v-if=\"slotProps\">\n    <p>{{ slotProps.interrupt?.message ?? \"Approve this action?\" }}</p>\n    <button @click=\"slotProps.resolve({ approved: true })\">Approve</button>\n    <button @click=\"slotProps.cancel()\">Cancel</button>\n  </section>\n</template>",
+   "rendered": true
+  },
+  {
+   "lang": "vue",
+   "title": null,
+   "code": "<template>\n  <ul v-if=\"slotProps\">\n    <li v-for=\"item in slotProps.interrupts\" :key=\"item.id\">\n      {{ item.message }}\n      <button @click=\"slotProps.resolve({ ok: true }, item.id)\">Approve</button>\n      <button @click=\"slotProps.cancel(item.id)\">Cancel</button>\n    </li>\n  </ul>\n</template>",
+   "rendered": true
+  },
+  {
+   "lang": "vue",
+   "title": "src/App.vue",
+   "code": "<script setup lang=\"ts\">\nimport { CopilotKitProvider } from \"@copilotkit/vue/v2\";\nimport MeetingChat from \"./components/MeetingChat.vue\";\n</script>\n\n<template>\n  <CopilotKitProvider runtime-url=\"/api/copilotkit\">\n    <MeetingChat />\n  </CopilotKitProvider>\n</template>",
+   "rendered": true
+  }
+ ],
+ "multi-agent__subagents": [
+  {
+   "lang": "csharp",
+   "title": "agent/SubagentsAgent.cs",
+   "code": "using System.ComponentModel;\nusing System.Diagnostics.CodeAnalysis;\nusing System.Net.Http;\nusing System.Runtime.CompilerServices;\nusing System.Text.Json;\nusing System.Text.Json.Serialization;\nusing Microsoft.Agents.AI;\nusing Microsoft.Extensions.AI;\nusing Microsoft.Extensions.Logging;\nusing Microsoft.Extensions.Logging.Abstractions;\nusing OpenAI;\nusing System.ClientModel;\n\n// SubagentsAgent \u2014 backs the /subagents demo.\n//\n// Mirrors langgraph-python/src/agents/subagents.py and\n// google-adk/src/agents/subagents_agent.py:\n//\n//   * A supervisor ChatClientAgent exposes three tools \u2014 `research_agent`,\n//     `writing_agent`, `critique_agent` \u2014 each of which delegates to a\n//     specialised sub-agent.\n//\n//   * Each sub-agent is implemented as a single-shot secondary chat-client\n//     call with its own system prompt. This is conceptually identical to\n//     spawning a separate ChatClientAgent + Runner per delegation; we use a\n//     single-shot call here to keep the demo wiring tight (and to mirror the\n//     google-adk reference, which does the same with `genai.Client`).\n//\n//   * Every delegation is recorded in `state.delegations` \u2014 a list of\n//     `Delegation { id, sub_agent, task, status, result }` records \u2014 and\n//     emitted to the UI as a state-snapshot DataContent payload after the\n//     supervisor's stream completes. (The snapshot also gets re-emitted on\n//     each tool call so the UI's `running` -> `completed` transition is\n//     visible mid-stream; see `EmitSnapshotAsync` below.)\n[SuppressMessage(\"Performance\", \"CA1812:Avoid uninstantiated internal classes\", Justification = \"Instantiated by SubagentsAgentFactory\")]\ninternal sealed class SubagentsAgent : DelegatingAIAgent\n{\n    private readonly ILogger<SubagentsAgent> _logger;\n    private readonly SubagentsStore _store;\n\n    public SubagentsAgent(\n        AIAgent innerAgent,\n        SubagentsStore store,\n        ILogger<SubagentsAgent>? logger = null)\n        : base(innerAgent)\n    {\n        ArgumentNullException.ThrowIfNull(innerAgent);\n        ArgumentNullException.ThrowIfNull(store);\n        _store = store;\n        _logger = logger ?? NullLogger<SubagentsAgent>.Instance;\n    }\n\n    protected override Task<AgentResponse> RunCoreAsync(IEnumerable<ChatMessage> messages, AgentSession? thread = null, AgentRunOptions? options = null, CancellationToken cancellationToken = default)\n    {\n        return RunCoreStreamingAsync(messages, thread, options, cancellationToken).ToAgentResponseAsync(cancellationToken);\n    }\n\n    protected override async IAsyncEnumerable<AgentResponseUpdate> RunCoreStreamingAsync(\n        IEnumerable<ChatMessage> messages,\n        AgentSession? thread = null,\n        AgentRunOptions? options = null,\n        [EnumeratorCancellation] CancellationToken cancellationToken = default)\n    {\n        ArgumentNullException.ThrowIfNull(messages);\n        var messageList = messages as IReadOnlyList<ChatMessage> ?? messages.ToList();\n\n        // Bind the tool's read/write target to the current thread so each\n        // conversation appends to its own delegation list. The store\n        // exposes a per-thread \"active\" handle that the static tool\n        // function reads. We restore the previous value on exit so nested /\n        // overlapping runs don't trample each other.\n        var previous = (AgentSession?)_store.SetActiveThread(thread);\n        try\n        {\n            await foreach (var update in InnerAgent.RunStreamingAsync(messageList, thread, options, cancellationToken).ConfigureAwait(false))\n            {\n                yield return update;\n\n                // Flush any state changes the tool made during this update\n                // chunk. The inner ChatClientAgent doesn't emit DataContent\n                // for tool calls, so the UI would otherwise only see the\n                // final post-stream snapshot \u2014 losing the visible\n                // running -> completed transition that makes the demo\n                // compelling. We dedupe via SubagentsStore.TakeDirtyVersion\n                // so we don't spam identical snapshots across token chunks.\n                if (_store.TakeDirty(thread))\n                {\n                    var snapshot = _store.BuildSnapshot(thread);\n                    var bytes = JsonSerializer.SerializeToUtf8Bytes(\n                        snapshot,\n                        SubagentsSerializerContext.Default.SubagentsSnapshot);\n                    yield return new AgentResponseUpdate\n                    {\n                        Contents = [new DataContent(bytes, \"application/json\")],\n                    };\n                }\n            }\n        }\n        finally\n        {\n            _store.SetActiveThread(previous);\n        }\n\n        // Final snapshot \u2014 guarantees at least one state event per turn\n        // even if the supervisor produced no tool calls (so the UI sees a\n        // stable empty `delegations` list rather than `undefined`).\n        var finalSnapshot = _store.BuildSnapshot(thread);\n        var finalBytes = JsonSerializer.SerializeToUtf8Bytes(\n            finalSnapshot,\n            SubagentsSerializerContext.Default.SubagentsSnapshot);\n        yield return new AgentResponseUpdate\n        {\n            Contents = [new DataContent(finalBytes, \"application/json\")],\n        };\n    }\n}\n\n/// <summary>\n/// Per-thread store of delegation entries. Reads/writes are synchronized via\n/// a single lock \u2014 the demo workload is light and the lock is held only\n/// across the read-modify-write of an in-memory list.\n/// </summary>\ninternal sealed class SubagentsStore\n{\n    // Instance-scoped (not static) so multiple SubagentsStore instances \u2014\n    // e.g. test helpers, future multi-tenant wiring \u2014 don't share global\n    // state with their per-instance `_slots` dict.\n    private readonly object _globalSlot = new();\n    private readonly AsyncLocal<object?> _activeThreadKey = new();\n\n    private readonly Dictionary<object, ThreadSlot> _slots = new();\n    private readonly object _lock = new();\n\n    public object? SetActiveThread(AgentSession? thread)\n    {\n        var prior = _activeThreadKey.Value;\n        _activeThreadKey.Value = thread ?? _globalSlot;\n        return prior;\n    }\n\n    public string AppendRunning(string subAgent, string task)\n    {\n        var entry = new SubagentDelegation(\n            Id: Guid.NewGuid().ToString(\"n\")[..16],\n            SubAgent: subAgent,\n            Task: task,\n            Status: \"running\",\n            Result: \"\");\n        lock (_lock)\n        {\n            // Mirror into every live conversation slot when the active key\n            // collapses to global \u2014 harness tool invocation can drop the\n            // AsyncLocal set by SetActiveThread (same root cause as\n            // D5ParityAgents SnapshotStore). Without this the left-panel UI\n            // stays empty while chat tool cards still stream.\n            foreach (var slot in WriteTargets())\n            {\n                slot.Delegations.Add(entry);\n                slot.DirtyVersion++;\n            }\n        }\n        return entry.Id;\n    }\n\n    public void Update(string id, string status, string result)\n    {\n        lock (_lock)\n        {\n            foreach (var slot in WriteTargets())\n            {\n                for (var i = 0; i < slot.Delegations.Count; i++)\n                {\n                    if (slot.Delegations[i].Id == id)\n                    {\n                        slot.Delegations[i] = slot.Delegations[i] with\n                        {\n                            Status = status,\n                            Result = result,\n                        };\n                        slot.DirtyVersion++;\n                        break;\n                    }\n                }\n            }\n        }\n    }\n\n    public bool TakeDirty(AgentSession? thread)\n    {\n        lock (_lock)\n        {\n            var slot = ResolveSlotForRead(thread);\n            if (slot is null)\n            {\n                return false;\n            }\n            if (slot.DirtyVersion == slot.LastEmittedVersion)\n            {\n                return false;\n            }\n            slot.LastEmittedVersion = slot.DirtyVersion;\n            return true;\n        }\n    }\n\n    public SubagentsSnapshot BuildSnapshot(AgentSession? thread)\n    {\n        lock (_lock)\n        {\n            var slot = ResolveSlotForRead(thread);\n            if (slot is null)\n            {\n                return new SubagentsSnapshot(Array.Empty<SubagentDelegation>());\n            }\n            // Defensive copy \u2014 caller may serialize after the lock releases.\n            return new SubagentsSnapshot(slot.Delegations.ToArray());\n        }\n    }\n\n    /// <summary>\n    /// Prefer the per-thread slot when it has delegations; otherwise fall\n    /// back to the global slot that tools land in when AsyncLocal doesn't\n    /// flow into the harness function-invocation context.\n    /// </summary>\n    private ThreadSlot? ResolveSlotForRead(AgentSession? thread)\n    {\n        if (thread is not null &&\n            _slots.TryGetValue(thread, out var threadSlot) &&\n            (threadSlot.Delegations.Count > 0 || threadSlot.DirtyVersion > 0))\n        {\n            return threadSlot;\n        }\n        if (_slots.TryGetValue(_globalSlot, out var globalSlot) &&\n            (globalSlot.Delegations.Count > 0 || globalSlot.DirtyVersion > 0))\n        {\n            return globalSlot;\n        }\n        if (thread is not null && _slots.TryGetValue(thread, out threadSlot))\n        {\n            return threadSlot;\n        }\n        return _slots.TryGetValue(_globalSlot, out globalSlot) ? globalSlot : null;\n    }\n\n    private IEnumerable<ThreadSlot> WriteTargets()\n    {\n        var key = _activeThreadKey.Value ?? _globalSlot;\n        yield return GetOrCreateSlot(key);\n\n        // When AsyncLocal missed and we wrote to global, also mirror into\n        // any already-bound conversation slots so the post-run snapshot\n        // (which keys by AgentSession) still sees the delegations.\n        if (ReferenceEquals(key, _globalSlot))\n        {\n            foreach (var kvp in _slots)\n            {\n                if (!ReferenceEquals(kvp.Key, _globalSlot))\n                {\n                    yield return kvp.Value;\n                }\n            }\n        }\n    }\n\n    private ThreadSlot GetOrCreateSlot(object key)\n    {\n        if (!_slots.TryGetValue(key, out var slot))\n        {\n            slot = new ThreadSlot();\n            _slots[key] = slot;\n        }\n        return slot;\n    }\n\n    private sealed class ThreadSlot\n    {\n        public List<SubagentDelegation> Delegations { get; } = new();\n        public long DirtyVersion { get; set; }\n        public long LastEmittedVersion { get; set; }\n    }\n}\n\ninternal sealed record SubagentDelegation(\n    [property: JsonPropertyName(\"id\")] string Id,\n    [property: JsonPropertyName(\"sub_agent\")] string SubAgent,\n    [property: JsonPropertyName(\"task\")] string Task,\n    [property: JsonPropertyName(\"status\")] string Status,\n    [property: JsonPropertyName(\"result\")] string Result);\n\ninternal sealed record SubagentsSnapshot(\n    [property: JsonPropertyName(\"delegations\")] IReadOnlyList<SubagentDelegation> Delegations);\n\n[JsonSerializable(typeof(SubagentsSnapshot))]\n[JsonSerializable(typeof(SubagentDelegation))]\n[JsonSerializable(typeof(IReadOnlyList<SubagentDelegation>))]\ninternal sealed partial class SubagentsSerializerContext : JsonSerializerContext;\n\n/// <summary>\n/// Factory that builds the supervisor agent + the three sub-agent tools.\n/// Mounted in Program.cs at `/subagents`.\n/// </summary>\npublic sealed class SubagentsAgentFactory\n{\n    private const int HarnessMaxContextWindowTokens = 128_000;\n    private const int HarnessMaxOutputTokens = 8_192;\n    private const string SubAgentModel = \"gpt-6-luna\";\n\n    // Each sub-agent is a single-shot ChatClient call (built per-delegation\n    // in DelegateAsync) with its own system prompt. They don't share memory\n    // or tools with the supervisor \u2014 the supervisor only sees their return\n    // value as a tool result.\n    private const string ResearchSystemPrompt =\n        \"You are a research sub-agent. Given a topic, produce a concise \" +\n        \"bulleted list of 3-5 key facts. No preamble, no closing.\";\n    private const string WritingSystemPrompt =\n        \"You are a writing sub-agent. Given a brief and optional source facts, \" +\n        \"produce a polished 1-paragraph draft. Be clear and concrete. No preamble.\";\n    private const string CritiqueSystemPrompt =\n        \"You are an editorial critique sub-agent. Given a draft, give 2-3 crisp, \" +\n        \"actionable critiques. No preamble.\";",
+   "rendered": true
+  },
+  {
+   "lang": "csharp",
+   "title": "agent/SubagentsAgent.cs",
+   "code": "using System.ComponentModel;\nusing System.Diagnostics.CodeAnalysis;\nusing System.Net.Http;\nusing System.Runtime.CompilerServices;\nusing System.Text.Json;\nusing System.Text.Json.Serialization;\nusing Microsoft.Agents.AI;\nusing Microsoft.Extensions.AI;\nusing Microsoft.Extensions.Logging;\nusing Microsoft.Extensions.Logging.Abstractions;\nusing OpenAI;\nusing System.ClientModel;\n\n// SubagentsAgent \u2014 backs the /subagents demo.\n//\n// Mirrors langgraph-python/src/agents/subagents.py and\n// google-adk/src/agents/subagents_agent.py:\n//\n//   * A supervisor ChatClientAgent exposes three tools \u2014 `research_agent`,\n//     `writing_agent`, `critique_agent` \u2014 each of which delegates to a\n//     specialised sub-agent.\n//\n//   * Each sub-agent is implemented as a single-shot secondary chat-client\n//     call with its own system prompt. This is conceptually identical to\n//     spawning a separate ChatClientAgent + Runner per delegation; we use a\n//     single-shot call here to keep the demo wiring tight (and to mirror the\n//     google-adk reference, which does the same with `genai.Client`).\n//\n//   * Every delegation is recorded in `state.delegations` \u2014 a list of\n//     `Delegation { id, sub_agent, task, status, result }` records \u2014 and\n//     emitted to the UI as a state-snapshot DataContent payload after the\n//     supervisor's stream completes. (The snapshot also gets re-emitted on\n//     each tool call so the UI's `running` -> `completed` transition is\n//     visible mid-stream; see `EmitSnapshotAsync` below.)\n[SuppressMessage(\"Performance\", \"CA1812:Avoid uninstantiated internal classes\", Justification = \"Instantiated by SubagentsAgentFactory\")]\ninternal sealed class SubagentsAgent : DelegatingAIAgent\n{\n    private readonly ILogger<SubagentsAgent> _logger;\n    private readonly SubagentsStore _store;\n\n    public SubagentsAgent(\n        AIAgent innerAgent,\n        SubagentsStore store,\n        ILogger<SubagentsAgent>? logger = null)\n        : base(innerAgent)\n    {\n        ArgumentNullException.ThrowIfNull(innerAgent);\n        ArgumentNullException.ThrowIfNull(store);\n        _store = store;\n        _logger = logger ?? NullLogger<SubagentsAgent>.Instance;\n    }\n\n    protected override Task<AgentResponse> RunCoreAsync(IEnumerable<ChatMessage> messages, AgentSession? thread = null, AgentRunOptions? options = null, CancellationToken cancellationToken = default)\n    {\n        return RunCoreStreamingAsync(messages, thread, options, cancellationToken).ToAgentResponseAsync(cancellationToken);\n    }\n\n    protected override async IAsyncEnumerable<AgentResponseUpdate> RunCoreStreamingAsync(\n        IEnumerable<ChatMessage> messages,\n        AgentSession? thread = null,\n        AgentRunOptions? options = null,\n        [EnumeratorCancellation] CancellationToken cancellationToken = default)\n    {\n        ArgumentNullException.ThrowIfNull(messages);\n        var messageList = messages as IReadOnlyList<ChatMessage> ?? messages.ToList();\n\n        // Bind the tool's read/write target to the current thread so each\n        // conversation appends to its own delegation list. The store\n        // exposes a per-thread \"active\" handle that the static tool\n        // function reads. We restore the previous value on exit so nested /\n        // overlapping runs don't trample each other.\n        var previous = (AgentSession?)_store.SetActiveThread(thread);\n        try\n        {\n            await foreach (var update in InnerAgent.RunStreamingAsync(messageList, thread, options, cancellationToken).ConfigureAwait(false))\n            {\n                yield return update;\n\n                // Flush any state changes the tool made during this update\n                // chunk. The inner ChatClientAgent doesn't emit DataContent\n                // for tool calls, so the UI would otherwise only see the\n                // final post-stream snapshot \u2014 losing the visible\n                // running -> completed transition that makes the demo\n                // compelling. We dedupe via SubagentsStore.TakeDirtyVersion\n                // so we don't spam identical snapshots across token chunks.\n                if (_store.TakeDirty(thread))\n                {\n                    var snapshot = _store.BuildSnapshot(thread);\n                    var bytes = JsonSerializer.SerializeToUtf8Bytes(\n                        snapshot,\n                        SubagentsSerializerContext.Default.SubagentsSnapshot);\n                    yield return new AgentResponseUpdate\n                    {\n                        Contents = [new DataContent(bytes, \"application/json\")],\n                    };\n                }\n            }\n        }\n        finally\n        {\n            _store.SetActiveThread(previous);\n        }\n\n        // Final snapshot \u2014 guarantees at least one state event per turn\n        // even if the supervisor produced no tool calls (so the UI sees a\n        // stable empty `delegations` list rather than `undefined`).\n        var finalSnapshot = _store.BuildSnapshot(thread);\n        var finalBytes = JsonSerializer.SerializeToUtf8Bytes(\n            finalSnapshot,\n            SubagentsSerializerContext.Default.SubagentsSnapshot);\n        yield return new AgentResponseUpdate\n        {\n            Contents = [new DataContent(finalBytes, \"application/json\")],\n        };\n    }\n}\n\n/// <summary>\n/// Per-thread store of delegation entries. Reads/writes are synchronized via\n/// a single lock \u2014 the demo workload is light and the lock is held only\n/// across the read-modify-write of an in-memory list.\n/// </summary>\ninternal sealed class SubagentsStore\n{\n    // Instance-scoped (not static) so multiple SubagentsStore instances \u2014\n    // e.g. test helpers, future multi-tenant wiring \u2014 don't share global\n    // state with their per-instance `_slots` dict.\n    private readonly object _globalSlot = new();\n    private readonly AsyncLocal<object?> _activeThreadKey = new();\n\n    private readonly Dictionary<object, ThreadSlot> _slots = new();\n    private readonly object _lock = new();\n\n    public object? SetActiveThread(AgentSession? thread)\n    {\n        var prior = _activeThreadKey.Value;\n        _activeThreadKey.Value = thread ?? _globalSlot;\n        return prior;\n    }\n\n    public string AppendRunning(string subAgent, string task)\n    {\n        var entry = new SubagentDelegation(\n            Id: Guid.NewGuid().ToString(\"n\")[..16],\n            SubAgent: subAgent,\n            Task: task,\n            Status: \"running\",\n            Result: \"\");\n        lock (_lock)\n        {\n            // Mirror into every live conversation slot when the active key\n            // collapses to global \u2014 harness tool invocation can drop the\n            // AsyncLocal set by SetActiveThread (same root cause as\n            // D5ParityAgents SnapshotStore). Without this the left-panel UI\n            // stays empty while chat tool cards still stream.\n            foreach (var slot in WriteTargets())\n            {\n                slot.Delegations.Add(entry);\n                slot.DirtyVersion++;\n            }\n        }\n        return entry.Id;\n    }\n\n    public void Update(string id, string status, string result)\n    {\n        lock (_lock)\n        {\n            foreach (var slot in WriteTargets())\n            {\n                for (var i = 0; i < slot.Delegations.Count; i++)\n                {\n                    if (slot.Delegations[i].Id == id)\n                    {\n                        slot.Delegations[i] = slot.Delegations[i] with\n                        {\n                            Status = status,\n                            Result = result,\n                        };\n                        slot.DirtyVersion++;\n                        break;\n                    }\n                }\n            }\n        }\n    }\n\n    public bool TakeDirty(AgentSession? thread)\n    {\n        lock (_lock)\n        {\n            var slot = ResolveSlotForRead(thread);\n            if (slot is null)\n            {\n                return false;\n            }\n            if (slot.DirtyVersion == slot.LastEmittedVersion)\n            {\n                return false;\n            }\n            slot.LastEmittedVersion = slot.DirtyVersion;\n            return true;\n        }\n    }\n\n    public SubagentsSnapshot BuildSnapshot(AgentSession? thread)\n    {\n        lock (_lock)\n        {\n            var slot = ResolveSlotForRead(thread);\n            if (slot is null)\n            {\n                return new SubagentsSnapshot(Array.Empty<SubagentDelegation>());\n            }\n            // Defensive copy \u2014 caller may serialize after the lock releases.\n            return new SubagentsSnapshot(slot.Delegations.ToArray());\n        }\n    }\n\n    /// <summary>\n    /// Prefer the per-thread slot when it has delegations; otherwise fall\n    /// back to the global slot that tools land in when AsyncLocal doesn't\n    /// flow into the harness function-invocation context.\n    /// </summary>\n    private ThreadSlot? ResolveSlotForRead(AgentSession? thread)\n    {\n        if (thread is not null &&\n            _slots.TryGetValue(thread, out var threadSlot) &&\n            (threadSlot.Delegations.Count > 0 || threadSlot.DirtyVersion > 0))\n        {\n            return threadSlot;\n        }\n        if (_slots.TryGetValue(_globalSlot, out var globalSlot) &&\n            (globalSlot.Delegations.Count > 0 || globalSlot.DirtyVersion > 0))\n        {\n            return globalSlot;\n        }\n        if (thread is not null && _slots.TryGetValue(thread, out threadSlot))\n        {\n            return threadSlot;\n        }\n        return _slots.TryGetValue(_globalSlot, out globalSlot) ? globalSlot : null;\n    }\n\n    private IEnumerable<ThreadSlot> WriteTargets()\n    {\n        var key = _activeThreadKey.Value ?? _globalSlot;\n        yield return GetOrCreateSlot(key);\n\n        // When AsyncLocal missed and we wrote to global, also mirror into\n        // any already-bound conversation slots so the post-run snapshot\n        // (which keys by AgentSession) still sees the delegations.\n        if (ReferenceEquals(key, _globalSlot))\n        {\n            foreach (var kvp in _slots)\n            {\n                if (!ReferenceEquals(kvp.Key, _globalSlot))\n                {\n                    yield return kvp.Value;\n                }\n            }\n        }\n    }\n\n    private ThreadSlot GetOrCreateSlot(object key)\n    {\n        if (!_slots.TryGetValue(key, out var slot))\n        {\n            slot = new ThreadSlot();\n            _slots[key] = slot;\n        }\n        return slot;\n    }\n\n    private sealed class ThreadSlot\n    {\n        public List<SubagentDelegation> Delegations { get; } = new();\n        public long DirtyVersion { get; set; }\n        public long LastEmittedVersion { get; set; }\n    }\n}\n\ninternal sealed record SubagentDelegation(\n    [property: JsonPropertyName(\"id\")] string Id,\n    [property: JsonPropertyName(\"sub_agent\")] string SubAgent,\n    [property: JsonPropertyName(\"task\")] string Task,\n    [property: JsonPropertyName(\"status\")] string Status,\n    [property: JsonPropertyName(\"result\")] string Result);\n\ninternal sealed record SubagentsSnapshot(\n    [property: JsonPropertyName(\"delegations\")] IReadOnlyList<SubagentDelegation> Delegations);\n\n[JsonSerializable(typeof(SubagentsSnapshot))]\n[JsonSerializable(typeof(SubagentDelegation))]\n[JsonSerializable(typeof(IReadOnlyList<SubagentDelegation>))]\ninternal sealed partial class SubagentsSerializerContext : JsonSerializerContext;\n\n/// <summary>\n/// Factory that builds the supervisor agent + the three sub-agent tools.\n/// Mounted in Program.cs at `/subagents`.\n/// </summary>\npublic sealed class SubagentsAgentFactory\n{\n    private const int HarnessMaxContextWindowTokens = 128_000;\n    private const int HarnessMaxOutputTokens = 8_192;\n    private const string SubAgentModel = \"gpt-6-luna\";\n\n    // Each sub-agent is a single-shot ChatClient call (built per-delegation\n    // in DelegateAsync) with its own system prompt. They don't share memory\n    // or tools with the supervisor \u2014 the supervisor only sees their return\n    // value as a tool result.\n    private const string ResearchSystemPrompt =\n        \"You are a research sub-agent. Given a topic, produce a concise \" +\n        \"bulleted list of 3-5 key facts. No preamble, no closing.\";\n    private const string WritingSystemPrompt =\n        \"You are a writing sub-agent. Given a brief and optional source facts, \" +\n        \"produce a polished 1-paragraph draft. Be clear and concrete. No preamble.\";\n    private const string CritiqueSystemPrompt =\n        \"You are an editorial critique sub-agent. Given a draft, give 2-3 crisp, \" +\n        \"actionable critiques. No preamble.\";\n\n    private const string SupervisorPrompt =\n        \"You are a supervisor agent that coordinates three specialized \" +\n        \"sub-agents to produce high-quality deliverables.\\n\\n\" +\n        \"Available sub-agents (call them as tools):\\n\" +\n        \"  - research_agent: gathers facts on a topic.\\n\" +\n        \"  - writing_agent: turns facts + a brief into a polished draft.\\n\" +\n        \"  - critique_agent: reviews a draft and suggests improvements.\\n\\n\" +\n        \"For most non-trivial user requests, delegate in sequence: research -> \" +\n        \"write -> critique. Pass relevant facts/draft through the `task` argument \" +\n        \"of each tool. Each tool returns a JSON object shaped \" +\n        \"{status: 'completed' | 'failed', result?: string, error?: string}. \" +\n        \"If a sub-agent fails, surface the failure briefly to the user (don't \" +\n        \"fabricate a result) and decide whether to retry. Keep your own \" +\n        \"messages short \u2014 explain the plan once, delegate, then return a \" +\n        \"concise summary once done. The UI shows the user a live log of \" +\n        \"every sub-agent delegation, including the in-flight 'running' state.\";\n\n    private readonly OpenAIClient _openAiClient;\n    private readonly ILoggerFactory _loggerFactory;\n    private readonly ILogger _logger;\n    private readonly JsonSerializerOptions _jsonSerializerOptions;\n    private readonly SubagentsStore _store = new();\n\n    public SubagentsAgentFactory(\n        OpenAIClient openAiClient,\n        ILoggerFactory loggerFactory,\n        JsonSerializerOptions jsonSerializerOptions)\n    {\n        ArgumentNullException.ThrowIfNull(openAiClient);\n        ArgumentNullException.ThrowIfNull(loggerFactory);\n        ArgumentNullException.ThrowIfNull(jsonSerializerOptions);\n\n        _openAiClient = openAiClient;\n        _loggerFactory = loggerFactory;\n        _logger = loggerFactory.CreateLogger<SubagentsAgentFactory>();\n        _jsonSerializerOptions = jsonSerializerOptions;\n    }\n\n    public AIAgent CreateAgent()\n    {\n        var chatClient = _openAiClient.GetChatClient(\"gpt-6-luna\").AsLunaChatClient();\n\n        // Each sub-agent is exposed to the supervisor LLM as an AIFunction\n        // tool. When the supervisor invokes one, DelegateAsync runs a fresh\n        // ChatClient call with that sub-agent's system prompt, appends a\n        // Delegation entry to shared state, and returns the sub-agent's\n        // output to the supervisor as a tool result.\n        var research = AIFunctionFactory.Create(\n            (Func<string, CancellationToken, Task<string>>)((task, ct) =>\n                DelegateAsync(\"research_agent\", ResearchSystemPrompt, task, ct)),\n            options: new()\n            {\n                Name = \"research_agent\",\n                Description = \"Delegate a research task to the research sub-agent. Returns JSON {status, result?, error?}.\",\n                SerializerOptions = _jsonSerializerOptions,\n            });\n        var writing = AIFunctionFactory.Create(\n            (Func<string, CancellationToken, Task<string>>)((task, ct) =>\n                DelegateAsync(\"writing_agent\", WritingSystemPrompt, task, ct)),\n            options: new()\n            {\n                Name = \"writing_agent\",\n                Description = \"Delegate a drafting task to the writing sub-agent. Returns JSON {status, result?, error?}.\",\n                SerializerOptions = _jsonSerializerOptions,\n            });\n        var critique = AIFunctionFactory.Create(\n            (Func<string, CancellationToken, Task<string>>)((task, ct) =>\n                DelegateAsync(\"critique_agent\", CritiqueSystemPrompt, task, ct)),\n            options: new()\n            {\n                Name = \"critique_agent\",\n                Description = \"Delegate a critique task to the critique sub-agent. Returns JSON {status, result?, error?}.\",\n                SerializerOptions = _jsonSerializerOptions,\n            });",
+   "rendered": true
+  }
+ ],
+ "prebuilt-components": [
+  {
+   "lang": "vue",
+   "title": "App.vue",
+   "code": "<script setup lang=\"ts\">\nimport { CopilotChat, CopilotKitProvider } from \"@copilotkit/vue/v2\";\nimport \"@copilotkit/vue/styles.css\";\n</script>\n\n<template>\n  <CopilotKitProvider runtime-url=\"/api/copilotkit\">\n    <CopilotChat agent-id=\"my-agent\" />\n  </CopilotKitProvider>\n</template>",
+   "rendered": true
+  }
+ ],
+ "prebuilt-components__copilot-threads-drawer": [
+  {
+   "lang": "vue",
+   "title": "src/App.vue",
+   "code": "<script setup lang=\"ts\">\nimport {\n  CopilotChat,\n  CopilotChatConfigurationProvider,\n  CopilotKitProvider,\n  CopilotThreadsDrawer,\n} from \"@copilotkit/vue/v2\";\nimport \"@copilotkit/vue/styles.css\";\n</script>\n\n<template>\n  <CopilotKitProvider\n    runtime-url=\"/api/copilotkit\"\n    public-license-key=\"ck_pub_...\"\n  >\n    <CopilotChatConfigurationProvider agent-id=\"support\">\n      <div style=\"display: flex; height: 100dvh\">\n        <CopilotThreadsDrawer />\n        <CopilotChat />\n      </div>\n    </CopilotChatConfigurationProvider>\n  </CopilotKitProvider>\n</template>",
+   "rendered": true
+  },
+  {
+   "lang": "vue",
+   "title": "src/components/NewConversationButton.vue",
+   "code": "<script setup lang=\"ts\">\nimport { useCopilotChatConfiguration } from \"@copilotkit/vue/v2\";\n\nconst configuration = useCopilotChatConfiguration();\n\nfunction startNewConversation() {\n  configuration.value?.startNewThread();\n}\n</script>\n\n<template>\n  <button type=\"button\" @click=\"startNewConversation\">New conversation</button>\n</template>",
+   "rendered": true
+  },
+  {
+   "lang": "vue",
+   "title": "src/App.vue with a toolbar button",
+   "code": "<script setup lang=\"ts\">\nimport {\n  CopilotChat,\n  CopilotChatConfigurationProvider,\n  CopilotKitProvider,\n  CopilotThreadsDrawer,\n} from \"@copilotkit/vue/v2\";\nimport NewConversationButton from \"./components/NewConversationButton.vue\";\nimport \"@copilotkit/vue/styles.css\";\n</script>\n\n<template>\n  <CopilotKitProvider\n    runtime-url=\"/api/copilotkit\"\n    public-license-key=\"ck_pub_...\"\n  >\n    <CopilotChatConfigurationProvider agent-id=\"support\">\n      <div style=\"display: flex; height: 100dvh\">\n        <CopilotThreadsDrawer />\n        <main style=\"flex: 1; display: flex; flex-direction: column\">\n          <header><NewConversationButton /></header>\n          <CopilotChat />\n        </main>\n      </div>\n    </CopilotChatConfigurationProvider>\n  </CopilotKitProvider>\n</template>",
+   "rendered": true
+  },
+  {
+   "lang": "vue",
+   "title": "src/components/ControlledChat.vue",
+   "code": "<script setup lang=\"ts\">\nimport { ref } from \"vue\";\nimport {\n  CopilotChat,\n  CopilotChatConfigurationProvider,\n  CopilotThreadsDrawer,\n} from \"@copilotkit/vue/v2\";\n\nconst threadId = ref<string>(crypto.randomUUID());\nconst selectThread = (id: string) => {\n  threadId.value = id;\n};\nconst startNewConversation = () => {\n  threadId.value = crypto.randomUUID();\n};\n</script>\n\n<template>\n  <CopilotChatConfigurationProvider :thread-id=\"threadId\">\n    <CopilotThreadsDrawer\n      :on-thread-select=\"selectThread\"\n      :on-new-thread=\"startNewConversation\"\n    />\n    <button type=\"button\" @click=\"startNewConversation\">\n      New conversation\n    </button>\n    <CopilotChat />\n  </CopilotChatConfigurationProvider>\n</template>",
+   "rendered": true
+  },
+  {
+   "lang": "css",
+   "title": null,
+   "code": "copilotkit-threads-drawer::part(new-thread-button),\ncopilotkit-threads-drawer::part(launcher-new-thread) {\n  display: none;\n}",
+   "rendered": true
+  },
+  {
+   "lang": "vue",
+   "title": null,
+   "code": "<CopilotThreadsDrawer>\n  <span slot=\"header\">My conversations</span>\n</CopilotThreadsDrawer>",
+   "rendered": true
+  },
+  {
+   "lang": "vue",
+   "title": null,
+   "code": "<CopilotThreadsDrawer>\n  <template #row=\"{ thread }\">\n    <strong>{{ thread.name ?? \"New conversation\" }}</strong>\n  </template>\n</CopilotThreadsDrawer>",
+   "rendered": true
+  }
+ ],
+ "programmatic-control": [
+  {
+   "lang": "vue",
+   "title": "src/components/AgentTrigger.vue",
+   "code": "<script setup lang=\"ts\">\nimport { toRaw } from \"vue\";\nimport { useAgent, useCopilotKit } from \"@copilotkit/vue/v2\";\n\nconst { agent } = useAgent({ agentId: \"sales\" });\nconst { copilotkit } = useCopilotKit();\n\nasync function run() {\n  const current = agent.value;\n  if (!current || current.isRunning) return;\n\n  current.addMessage({\n    id: crypto.randomUUID(),\n    role: \"user\",\n    content: \"Summarize the latest sales data\",\n  });\n\n  try {\n    await copilotkit.value.runAgent({ agent: toRaw(current) });\n  } catch (error) {\n    console.error(\"CopilotKit runAgent failed:\", error);\n  }\n}\n\nfunction stop() {\n  const current = agent.value;\n  if (!current) return;\n  copilotkit.value.stopAgent({ agent: toRaw(current) });\n}\n</script>\n\n<template>\n  <button :disabled=\"agent?.isRunning\" @click=\"run\">Run agent</button>\n  <button :disabled=\"!agent?.isRunning\" @click=\"stop\">Stop</button>\n</template>",
+   "rendered": true
+  },
+  {
+   "lang": "vue",
+   "title": "src/App.vue",
+   "code": "<script setup lang=\"ts\">\nimport { CopilotKitProvider } from \"@copilotkit/vue/v2\";\nimport AgentTrigger from \"./components/AgentTrigger.vue\";\n</script>\n\n<template>\n  <CopilotKitProvider runtime-url=\"/api/copilotkit\">\n    <AgentTrigger />\n  </CopilotKitProvider>\n</template>",
+   "rendered": true
+  },
+  {
+   "lang": "ts",
+   "title": null,
+   "code": "import { watch } from \"vue\";\n\nwatch(\n  agent,\n  (current, _previous, onCleanup) => {\n    if (!current) return;\n    const subscription = current.subscribe({\n      onRunStartedEvent: () => console.log(\"started\"),\n      onRunFinalized: () => console.log(\"done\"),\n      onRunFailed: ({ error }) => console.error(error),\n    });\n    onCleanup(() => subscription.unsubscribe());\n  },\n  { immediate: true },\n);",
+   "rendered": true
+  }
+ ],
+ "shared-state": [
+  {
+   "lang": "vue",
+   "title": "src/components/SharedWorkspace.vue",
+   "code": "<script setup lang=\"ts\">\nimport { computed } from \"vue\";\nimport { useAgent, UseAgentUpdate } from \"@copilotkit/vue/v2\";\n\ntype WorkspaceState = {\n  notes?: string[];\n  preferences?: { tone?: string };\n};\n\nconst { agent } = useAgent({\n  agentId: \"workspace\",\n  updates: [UseAgentUpdate.OnStateChanged],\n});\nconst state = computed(\n  () => (agent.value?.state ?? {}) as WorkspaceState,\n);\n</script>\n\n<template>\n  <ul>\n    <li v-for=\"note in state.notes ?? []\" :key=\"note\">{{ note }}</li>\n  </ul>\n</template>",
+   "rendered": true
+  },
+  {
+   "lang": "vue",
+   "title": "src/components/SharedWorkspace.vue",
+   "code": "<script setup lang=\"ts\">\nfunction setTone(tone: string) {\n  const current = agent.value;\n  if (!current) return;\n\n  const previous = (current.state ?? {}) as WorkspaceState;\n  current.setState({\n    ...previous,\n    preferences: { ...previous.preferences, tone },\n  });\n}\n</script>\n\n<template>\n  <button @click=\"setTone('concise')\">Prefer concise answers</button>\n</template>",
+   "rendered": true
+  },
+  {
+   "lang": "vue",
+   "title": "src/App.vue",
+   "code": "<script setup lang=\"ts\">\nimport { CopilotChat, CopilotKitProvider } from \"@copilotkit/vue/v2\";\nimport SharedWorkspace from \"./components/SharedWorkspace.vue\";\n</script>\n\n<template>\n  <CopilotKitProvider runtime-url=\"/api/copilotkit\">\n    <SharedWorkspace />\n    <CopilotChat agent-id=\"workspace\" />\n  </CopilotKitProvider>\n</template>",
+   "rendered": true
+  }
+ ],
+ "shared-state__agent-readonly": [
+  {
+   "lang": "vue",
+   "title": "src/components/WorkspaceContext.vue",
+   "code": "<script setup lang=\"ts\">\nimport { ref } from \"vue\";\nimport { useAgentContext } from \"@copilotkit/vue/v2\";\n\nconst workspaceId = ref(\"northstar\");\n\nuseAgentContext({\n  description: \"Active workspace\",\n  value: workspaceId,\n});\n</script>\n\n<template>\n  <p>Workspace: {{ workspaceId }}</p>\n</template>",
+   "rendered": true
+  },
+  {
+   "lang": "vue",
+   "title": "src/App.vue",
+   "code": "<script setup lang=\"ts\">\nimport { CopilotChat, CopilotKitProvider } from \"@copilotkit/vue/v2\";\nimport WorkspaceContext from \"./components/WorkspaceContext.vue\";\n</script>\n\n<template>\n  <CopilotKitProvider runtime-url=\"/api/copilotkit\">\n    <WorkspaceContext />\n    <CopilotChat />\n  </CopilotKitProvider>\n</template>",
+   "rendered": true
+  }
+ ],
+ "shared-state__rendering-in-app": [
+  {
+   "lang": "vue",
+   "title": "src/components/Canvas.vue",
+   "code": "<script setup lang=\"ts\">\nimport { computed, watchEffect } from \"vue\";\nimport { useAgent, UseAgentUpdate } from \"@copilotkit/vue/v2\";\n\ntype CanvasState = {\n  title: string;\n  items: { id: string; label: string; done: boolean }[];\n};\n\nconst initialState: CanvasState = {\n  title: \"Project launch\",\n  items: [\n    { id: \"research\", label: \"Research user needs\", done: true },\n    { id: \"prototype\", label: \"Build a prototype\", done: false },\n  ],\n};\n\nconst { agent } = useAgent({\n  updates: [UseAgentUpdate.OnStateChanged],\n});\nconst state = computed(\n  () => (agent.value?.state ?? {}) as Partial<CanvasState>,\n);\n\nwatchEffect(() => {\n  const currentAgent = agent.value;\n  if (!currentAgent) return;\n\n  const current = (currentAgent.state ?? {}) as Partial<CanvasState>;\n  const updates: Partial<CanvasState> = {};\n  if (current.title === undefined) updates.title = initialState.title;\n  if (current.items === undefined) updates.items = initialState.items;\n\n  if (Object.keys(updates).length > 0) {\n    currentAgent.setState({ ...current, ...updates });\n  }\n});\n</script>\n\n<template>\n  <main class=\"canvas\">\n    <h1>{{ state.title ?? \"Untitled\" }}</h1>\n    <ul>\n      <li\n        v-for=\"item in state.items ?? []\"\n        :key=\"item.id\"\n        :data-done=\"item.done\"\n      >\n        {{ item.label }}\n      </li>\n    </ul>\n  </main>\n</template>",
+   "rendered": true
+  },
+  {
+   "lang": "vue",
+   "title": "src/App.vue",
+   "code": "<script setup lang=\"ts\">\nimport { CopilotChat, CopilotKitProvider } from \"@copilotkit/vue/v2\";\nimport Canvas from \"./components/Canvas.vue\";\n</script>\n\n<template>\n  <CopilotKitProvider runtime-url=\"/api/copilotkit\">\n    <div class=\"app-shell\">\n      <Canvas />\n      <CopilotChat />\n    </div>\n  </CopilotKitProvider>\n</template>",
+   "rendered": true
+  },
+  {
+   "lang": "ts",
+   "title": null,
+   "code": "function toggleItem(id: string) {\n  const currentAgent = agent.value;\n  if (!currentAgent) return;\n\n  const current = (currentAgent.state ?? {}) as Partial<CanvasState>;\n  currentAgent.setState({\n    ...current,\n    items: (current.items ?? []).map((item) =>\n      item.id === id ? { ...item, done: !item.done } : item,\n    ),\n  });\n}",
+   "rendered": true
+  }
+ ],
+ "shared-state__streaming": [
+  {
+   "lang": "vue",
+   "title": "src/components/StreamingDocument.vue",
+   "code": "<script setup lang=\"ts\">\nimport { computed } from \"vue\";\nimport { useAgent, UseAgentUpdate } from \"@copilotkit/vue/v2\";\n\ntype DocumentState = { document?: string };\n\nconst { agent } = useAgent({\n  agentId: \"writer\",\n  updates: [\n    UseAgentUpdate.OnStateChanged,\n    UseAgentUpdate.OnRunStatusChanged,\n  ],\n});\nconst state = computed(\n  () => (agent.value?.state ?? {}) as DocumentState,\n);\n</script>\n\n<template>\n  <article aria-live=\"polite\">\n    <span v-if=\"agent?.isRunning\">LIVE</span>\n    <p>{{ state.document ?? \"Waiting for a draft\u2026\" }}</p>\n  </article>\n</template>",
+   "rendered": true
+  },
+  {
+   "lang": "vue",
+   "title": "src/App.vue",
+   "code": "<script setup lang=\"ts\">\nimport { CopilotChat, CopilotKitProvider } from \"@copilotkit/vue/v2\";\nimport StreamingDocument from \"./components/StreamingDocument.vue\";\n</script>\n\n<template>\n  <CopilotKitProvider runtime-url=\"/api/copilotkit\">\n    <StreamingDocument />\n    <CopilotChat agent-id=\"writer\" />\n  </CopilotKitProvider>\n</template>",
+   "rendered": true
+  }
+ ],
+ "webmcp": [
+  {
+   "lang": "vue",
+   "title": "OrderSearch.vue",
+   "code": "<script setup lang=\"ts\">\nimport { z } from \"zod\";\nimport { useFrontendTool } from \"@copilotkit/vue/v2\";\n\nuseFrontendTool({\n  name: \"searchOrders\",\n  description: \"Search the signed-in user's orders by status\",\n  parameters: z.object({\n    status: z.enum([\"open\", \"shipped\", \"delivered\"]),\n  }),\n  handler: async ({ status }) => {\n    const orders = await searchOrders(status);\n    return JSON.stringify(orders);\n  },\n  webmcp: {\n    annotations: {\n      readOnlyHint: true,\n    },\n  },\n});\n</script>",
+   "rendered": true
+  },
+  {
+   "lang": "ts",
+   "title": "webmcp.ts",
+   "code": "import { CopilotKitCore } from \"@copilotkit/core\";\nimport { z } from \"zod\";\n\nexport const copilotkit = new CopilotKitCore({\n  tools: [\n    {\n      name: \"searchOrders\",\n      description: \"Search the signed-in user's orders by status\",\n      parameters: z.object({\n        status: z.enum([\"open\", \"shipped\", \"delivered\"]),\n      }),\n      handler: async ({ status }) => {\n        const orders = await searchOrders(status);\n        return JSON.stringify(orders);\n      },\n      webmcp: {\n        annotations: {\n          readOnlyHint: true,\n        },\n      },\n    },\n  ],\n});",
+   "rendered": true
+  }
+ ],
+ "framework-quickstart": [
+  {
+   "lang": "bash",
+   "title": null,
+   "code": "npx copilotkit@latest create",
+   "rendered": true
+  },
+  {
+   "lang": "npm",
+   "title": null,
+   "code": "npm install",
+   "rendered": true
+  },
+  {
+   "lang": "bash",
+   "title": null,
+   "code": "npm run install:agent",
+   "rendered": true
+  },
+  {
+   "lang": "bash",
+   "title": null,
+   "code": "npm run install:agent\n# or manually:\ncd agent\nuv sync",
+   "rendered": true
+  },
+  {
+   "lang": "bash",
+   "title": null,
+   "code": "cd agent\ndotnet user-secrets set OPENAI_API_KEY \"<your-openai-api-key>\"\ncd ..",
+   "rendered": true
+  },
+  {
+   "lang": "bash",
+   "title": "agent/.env (OpenAI)",
+   "code": "OPENAI_API_KEY=sk-...your-openai-key-here...\nOPENAI_CHAT_MODEL_ID=gpt-6-luna",
+   "rendered": true
+  },
+  {
+   "lang": "bash",
+   "title": "agent/.env (Azure OpenAI)",
+   "code": "AZURE_OPENAI_ENDPOINT=https://your-resource.openai.azure.com/\nAZURE_OPENAI_CHAT_DEPLOYMENT_NAME=gpt-6-luna\n# Optional when az login is unavailable:\n# AZURE_OPENAI_API_KEY=...",
+   "rendered": true
+  },
+  {
+   "lang": "bash",
+   "title": null,
+   "code": "npm run dev",
+   "rendered": true
+  },
+  {
+   "lang": "bash",
+   "title": null,
+   "code": "pnpm dev",
+   "rendered": true
+  },
+  {
+   "lang": "bash",
+   "title": null,
+   "code": "yarn dev",
+   "rendered": true
+  },
+  {
+   "lang": "bash",
+   "title": null,
+   "code": "bun dev",
+   "rendered": true
+  },
+  {
+   "lang": "bash",
+   "title": null,
+   "code": "dotnet new web -n AGUIServer\ncd AGUIServer\ndotnet add package Microsoft.Agents.AI.Hosting.AGUI.AspNetCore --version 1.19.0-preview.260822.1\ndotnet add package Microsoft.Agents.AI.OpenAI --version 1.19.0\ndotnet user-secrets init",
+   "rendered": true
+  },
+  {
+   "lang": "csharp",
+   "title": "Program.cs",
+   "code": "#pragma warning disable OPENAI001\nusing Microsoft.Extensions.AI;\n                        using Microsoft.Agents.AI;\n\n                        using Microsoft.Agents.AI.Hosting.AGUI.AspNetCore;\n                        using OpenAI;\n                        using OpenAI.Chat;\n\n                        var builder = WebApplication.CreateBuilder(args);\n\n                        builder.Services.AddAGUIServer();\n                        var app = builder.Build();\n\n                        var openAiApiKey = builder.Configuration[\"OPENAI_API_KEY\"]\n                            ?? throw new InvalidOperationException(\"Set OPENAI_API_KEY\");\n                        var openAI = new OpenAIClient(openAiApiKey);\n\n                        var agent = openAI.GetChatClient(\"gpt-6-luna\")\n    .AsIChatClient().AsBuilder()\n    .ConfigureOptions(options => options.RawRepresentationFactory = _ =>\n        new OpenAI.Chat.ChatCompletionOptions { ReasoningEffortLevel = new(\"none\") })\n    .Build().AsAIAgent(\n                            name: \"MyAgent\",\n                            instructions: \"You are a helpful assistant.\");\n\n\n                        app.MapAGUIServer(\"/\", agent);\n                        app.Run(\"http://localhost:8000\");",
+   "rendered": true
+  },
+  {
+   "lang": "bash",
+   "title": null,
+   "code": "dotnet user-secrets set OPENAI_API_KEY \"<your-openai-api-key>\"\ndotnet run",
+   "rendered": true
+  },
+  {
+   "lang": "bash",
+   "title": null,
+   "code": "uv init my-agent\ncd my-agent\nuv add agent-framework-ag-ui python-dotenv uvicorn agent-framework-openai",
+   "rendered": true
+  },
+  {
+   "lang": "python",
+   "title": "main.py",
+   "code": "from __future__ import annotations\nimport os\nimport uvicorn\nfrom agent_framework import Agent\nfrom agent_framework.openai import OpenAIChatClient\nfrom agent_framework.ag_ui import add_agent_framework_fastapi_endpoint\nfrom azure.identity import DefaultAzureCredential\nfrom dotenv import load_dotenv\nfrom fastapi import FastAPI\n\nload_dotenv()\n\ndef _build_chat_client():\n    if os.getenv(\"AZURE_OPENAI_ENDPOINT\"):\n        azure_api_key = os.getenv(\"AZURE_OPENAI_API_KEY\")\n        return OpenAIChatClient(\n            model=os.getenv(\"AZURE_OPENAI_CHAT_DEPLOYMENT_NAME\", \"gpt-6-luna\"),\n            api_key=azure_api_key,\n            credential=None if azure_api_key else DefaultAzureCredential(),\n            azure_endpoint=os.getenv(\"AZURE_OPENAI_ENDPOINT\"),\n        )\n    if os.getenv(\"OPENAI_API_KEY\"):\n        return OpenAIChatClient(\n            model=os.getenv(\"OPENAI_CHAT_MODEL_ID\", \"gpt-6-luna\"),\n            api_key=os.getenv(\"OPENAI_API_KEY\"),\n        )\n    raise RuntimeError(\n        \"Set AZURE_OPENAI_ENDPOINT (uses az login unless AZURE_OPENAI_API_KEY is set) or OPENAI_API_KEY.\"\n    )\n\nchat_client = _build_chat_client()\n\nagent = Agent(\n    name=\"MyAgent\",\n    instructions=\"You are a helpful assistant.\",\n    client=chat_client,\n)\n\napp = FastAPI(title=\"Microsoft Agent Framework - Quickstart\")\nadd_agent_framework_fastapi_endpoint(app=app, agent=agent, path=\"/\")\n\nif __name__ == \"__main__\":\n    uvicorn.run(\"main:app\", host=\"0.0.0.0\", port=8000, reload=True)",
+   "rendered": true
+  },
+  {
+   "lang": "bash",
+   "title": null,
+   "code": "# OpenAI (agent/.env)\nOPENAI_API_KEY=sk-...your-openai-key-here...\nOPENAI_CHAT_MODEL_ID=gpt-6-luna\n# or Azure OpenAI (agent/.env)\nAZURE_OPENAI_ENDPOINT=https://your-resource.openai.azure.com/\nAZURE_OPENAI_CHAT_DEPLOYMENT_NAME=gpt-6-luna\n# Optional when az login is unavailable:\n# AZURE_OPENAI_API_KEY=...\n\n# Run the agent\nuv run main.py",
+   "rendered": true
+  },
+  {
+   "lang": "bash",
+   "title": null,
+   "code": "npx create-next-app@latest my-copilot-app\ncd my-copilot-app",
+   "rendered": true
+  },
+  {
+   "lang": "npm",
+   "title": null,
+   "code": "npm install @copilotkit/react-ui @copilotkit/react-core @copilotkit/runtime @ag-ui/client@1.0.2",
+   "rendered": true
+  },
+  {
+   "lang": "tsx",
+   "title": "app/api/copilotkit/[[...slug]]/route.ts",
+   "code": "import {\n  CopilotKitIntelligence,\n  CopilotRuntime,\n  createCopilotRuntimeHandler,\n} from \"@copilotkit/runtime/v2\";\nimport { HttpAgent } from \"@ag-ui/client\";\n\n// 1. You can use any service adapter here for multi-agent support. We use\n//    the empty adapter since we're only using one agent.\n\n// 2. Create the CopilotRuntime instance and utilize the Microsoft Agent Framework\n//    AG-UI integration to setup the connection.\n\nconst runtime = new CopilotRuntime({\n  agents: {\n    my_agent: new HttpAgent({ url: \"http://localhost:8000/\" }),\n  },\n\n  intelligence: new CopilotKitIntelligence({\n    apiKey: process.env.CPK_INTELLIGENCE_API_KEY!,\n  }),\n  // Threads are per-user. Without this, every visitor shares one history.\n  identifyUser: (request) => ({\n    id: request.headers.get(\"x-user-id\") ?? \"anonymous\",\n    name: request.headers.get(\"x-user-name\") ?? \"Anonymous\",\n  }),\n});\n\n// 3. Build a Next.js API route that handles the CopilotKit runtime requests.\nconst handler = createCopilotRuntimeHandler({\n  runtime,\n  basePath: \"/api/copilotkit\",\n});\n\nexport const GET = handler;\nexport const POST = handler;",
+   "rendered": true
+  },
+  {
+   "lang": "bash",
+   "title": "Terminal",
+   "code": "npx copilotkit@latest project select",
+   "rendered": true
+  },
+  {
+   "lang": "plaintext",
+   "title": ".env",
+   "code": "CPK_INTELLIGENCE_API_KEY=cpk-...",
+   "rendered": true
+  },
+  {
+   "lang": "tsx",
+   "title": "app/providers.tsx",
+   "code": "\"use client\";\n\nimport { CopilotKit } from \"@copilotkit/react-core/v2\";\n\nexport function Providers({ children }: { children: React.ReactNode }) {\n  return (\n    <CopilotKit runtimeUrl=\"/api/copilotkit\" agent=\"my_agent\" useSingleEndpoint={false}>\n      {children}\n    </CopilotKit>\n  );\n}",
+   "rendered": true
+  },
+  {
+   "lang": "tsx",
+   "title": "app/layout.tsx",
+   "code": "import { Providers } from \"./providers\";\nimport \"@copilotkit/react-core/v2/styles.css\";\nimport './globals.css';\n\nexport default function RootLayout({ children }: {children: React.ReactNode}) {\n  return (\n    <html lang=\"en\">\n      <body>\n\n        <Providers>\n          {children}\n        </Providers>\n      </body>\n    </html>\n  );\n}",
+   "rendered": true
+  },
+  {
+   "lang": "tsx",
+   "title": "app/page.tsx",
+   "code": "\"use client\";\n\n\nimport { CopilotSidebar } from \"@copilotkit/react-core/v2\";\n\nexport default function Page() {\n  return (\n    <main>\n\n      <CopilotSidebar\n        labels={{\n          modalHeaderTitle: \"Your Assistant\",\n          welcomeMessageText: \"Hi! How can I help you today?\",\n        }}\n      />\n      <h1>Your App</h1>\n    </main>\n  );\n}",
+   "rendered": true
+  },
+  {
+   "lang": "bash",
+   "title": null,
+   "code": "npm run dev",
+   "rendered": true
+  },
+  {
+   "lang": "bash",
+   "title": null,
+   "code": "pnpm dev",
+   "rendered": true
+  },
+  {
+   "lang": "bash",
+   "title": null,
+   "code": "yarn dev",
+   "rendered": true
+  },
+  {
+   "lang": "bash",
+   "title": null,
+   "code": "bun dev",
+   "rendered": true
+  },
+  {
+   "lang": "",
+   "title": null,
+   "code": "Can you tell me a joke?",
+   "rendered": true
+  },
+  {
+   "lang": "",
+   "title": null,
+   "code": "Can you help me understand AI?",
+   "rendered": true
+  },
+  {
+   "lang": "",
+   "title": null,
+   "code": "What do you think about .NET?",
+   "rendered": true
+  },
+  {
+   "lang": "bash",
+   "title": null,
+   "code": "cd agent\ndotnet user-secrets set OPENAI_API_KEY \"<your-openai-api-key>\"",
+   "rendered": true
+  },
+  {
+   "lang": "bash",
+   "title": null,
+   "code": "dotnet --version  # Should be 9.0.x or higher",
+   "rendered": true
+  },
+  {
+   "lang": "bash",
+   "title": null,
+   "code": "cd agent\ndotnet restore\ndotnet run",
+   "rendered": true
+  }
+ ]
+}

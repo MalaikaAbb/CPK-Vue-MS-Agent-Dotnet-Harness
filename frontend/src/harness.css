@@ -1,0 +1,47 @@
+/* [harness] Styles for the harness chrome only. Doc samples bring their own
+   (`@copilotkit/vue/styles.css`, imported in main.ts as the Quickstart does). */
+@import "tailwindcss";
+
+/* Green theme: Tailwind's slate greys are blue-tinted, so the harness re-tints
+   the whole slate scale to a green hue at the same lightness and chroma.
+   Only harness classes use slate; CopilotKit's own styles are unaffected. */
+@theme {
+  --color-slate-50: oklch(98.4% 0.003 155);
+  --color-slate-100: oklch(96.8% 0.007 155);
+  --color-slate-200: oklch(92.9% 0.013 155);
+  --color-slate-300: oklch(86.9% 0.022 155);
+  --color-slate-400: oklch(70.4% 0.04 155);
+  --color-slate-500: oklch(55.4% 0.046 155);
+  --color-slate-600: oklch(44.6% 0.043 155);
+  --color-slate-700: oklch(37.2% 0.044 155);
+  --color-slate-800: oklch(27.9% 0.041 155);
+  --color-slate-900: oklch(20.8% 0.042 155);
+  --color-slate-950: oklch(12.9% 0.042 155);
+}
+
+:root {
+  --accent: #15803d;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --accent: #4ade80;
+  }
+}
+
+html,
+body,
+#app {
+  height: 100%;
+}
+body {
+  @apply bg-slate-50 text-slate-900 antialiased dark:bg-slate-950 dark:text-slate-100;
+}
+
+/* Shiki emits its own <pre class="shiki">; size and pad it inside CodeFigure. */
+.code-figure pre.shiki {
+  margin: 0;
+  padding: 1rem;
+  font-size: 0.75rem;
+  line-height: 1.6;
+  background: transparent !important;
+}
